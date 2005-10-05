@@ -10,6 +10,7 @@
 #
 # Written by Xavier Defrang <xavier.defrang@brutele.be>
 # Modified By Plucio <plucio@brfree.com.br>
+# Modified By Fams <fams@linuxplace.com.br>
 # 
 
 # 
