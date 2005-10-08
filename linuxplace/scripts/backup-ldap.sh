@@ -7,8 +7,8 @@ STOP_BEFORE_BAK=1
 
 umask 077
 SLAPCAT="/usr/sbin/slapcat"
-BACKHOME="/var/backup"
-INITSCRIPT="/etc/init.d/ldap"
+BACKHOME="/var/backups"
+INITSCRIPT="/etc/init.d/slapd"
 
 
 if [ "$STOP_BEFORE_BAK" -eq "1" ];then
