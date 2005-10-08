@@ -1,0 +1,7 @@
+# /etc/cron.d/logcheck: crontab entries for the logcheck package
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=root
+
+0 */4 * * *    root   if [ -x /usr/local/linuxplace/scripts/backup-ldap.sh ]; then /usr/local/linuxplace/scripts/backup-ldap.sh; fi
+# EOF

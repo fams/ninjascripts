@@ -1,0 +1,6 @@
+LXBASE=/usr/local/linuxplace
+DOMAIN=ceibe
+EMPRESA=Ceibe
+SUFFIX="dc=$DOMAIN,dc=intra"
+cat $LXBASE/stanza/slapd.conf |sed "s/%SUFFIX%/$SUFFIX/" > $LXBASE/temp/slapd.conf
+cat $LXBASE/stanza/init.ldif |sed "s/%SUFFIX%/$SUFFIX/;s/%DOMAIN%/$DOMAIN/;s/%EMPRESA%/$EMPRESA/" > $LXBASE/temp/init.ldif
