@@ -43,7 +43,7 @@ objectClass: organizationalUnit
 structuralObjectClass: organizationalUnit
 
 dn: dc=domains,ou=postfix,ou=System,%SUFFIX%
-associatedDomain: mbernardes.com.br
+associatedDomain: %MAILDOMAIN%
 dc: domains
 objectClass: dNSDomain
 objectClass: domainRelatedObject

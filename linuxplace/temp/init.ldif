@@ -1,59 +1,59 @@
-dn: dc=ceibe,dc=intra
+dn: dc=unimedsj,dc=intra
 objectClass: top
 objectClass: dcObject
 objectClass: organization
-o: Ceibe
-dc: ceibe
+o: UnimedSJ
+dc: unimedsj
 
-dn: ou=People,dc=ceibe,dc=intra
+dn: ou=People,dc=unimedsj,dc=intra
 ou: People
 objectClass: organizationalUnit
 
-dn: ou=Groups,dc=ceibe,dc=intra
+dn: ou=Groups,dc=unimedsj,dc=intra
 ou: Groups
 objectClass: organizationalUnit
 
-dn: ou=Computers,dc=ceibe,dc=intra
+dn: ou=Computers,dc=unimedsj,dc=intra
 ou: Computers
 objectClass: organizationalUnit
 
-dn: ou=Staff,dc=ceibe,dc=intra
-ou:: Staff
+dn: ou=Staff,dc=unimedsj,dc=intra
+ou: Staff
 objectClass: top
 objectClass: organizationalUnit
 
-dn: cn=proxyuser,ou=Staff,dc=ceibe,dc=intra
+dn: cn=proxyuser,ou=Staff,dc=unimedsj,dc=intra
 objectClass: top
 objectClass: person
 sn: proxyuser
 cn: proxyuser
 
-dn: ou=personal_addressbook,dc=ceibe,dc=intra
+dn: ou=personal_addressbook,dc=unimedsj,dc=intra
 ou: personal_addressbook
 objectClass: top
 objectClass: organizationalUnit
 
-dn: ou=System,dc=ceibe,dc=intra
+dn: ou=System,dc=unimedsj,dc=intra
 ou: System
 objectClass: organizationalUnit
 
-dn: ou=postfix,ou=system,dc=ceibe,dc=intra
+dn: ou=postfix,ou=system,dc=unimedsj,dc=intra
 ou: postfix
 objectClass: organizationalUnit
 structuralObjectClass: organizationalUnit
 
-dn: dc=domains,ou=postfix,ou=System,dc=ceibe,dc=intra
-associatedDomain: mbernardes.com.br
+dn: dc=domains,ou=postfix,ou=System,dc=unimedsj,dc=intra
+associatedDomain: unimedsjdelrei.com.br
 dc: domains
 objectClass: dNSDomain
 objectClass: domainRelatedObject
 
-dn: ou=mailinglists,ou=postfix,ou=System,dc=ceibe,dc=intra
+dn: ou=mailinglists,ou=postfix,ou=System,dc=unimedsj,dc=intra
 ou: mailinglists
 objectClass: organizationalUnit
 structuralObjectClass: organizationalUnit
 
-dn: cn=users,ou=Groups,dc=ceibe,dc=intra
+dn: cn=users,ou=Groups,dc=unimedsj,dc=intra
 objectClass: posixGroup
 cn: users
 gidNumber: 100

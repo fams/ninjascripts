@@ -1,6 +1,16 @@
 LXBASE=/usr/local/linuxplace
-DOMAIN=ceibe
-EMPRESA=Ceibe
+DOMAIN=unimedsj
+MAILDOMAIN=unimedsjdelrei.com.br
+EMPRESA=UnimedSJ
 SUFFIX="dc=$DOMAIN,dc=intra"
 cat $LXBASE/stanza/slapd.conf |sed "s/%SUFFIX%/$SUFFIX/" > $LXBASE/temp/slapd.conf
-cat $LXBASE/stanza/init.ldif |sed "s/%SUFFIX%/$SUFFIX/;s/%DOMAIN%/$DOMAIN/;s/%EMPRESA%/$EMPRESA/" > $LXBASE/temp/init.ldif
+cat $LXBASE/stanza/init.ldif |sed "s/%SUFFIX%/$SUFFIX/;s/%DOMAIN%/$DOMAIN/;s/%EMPRESA%/$EMPRESA/;s/%MAILDOMAIN%/$MAILDOMAIN/" > $LXBASE/temp/init.ldif
+/etc/init.d/slapd stop
+mv /var/lib/ldap/DB_CONFIG $LXBASE/temp/
+rm /var/lib/ldap/* 
+mv $LXBASE/temp/DB_CONFIG /var/lib/ldap/
+cp $LXBASE/temp/slapd.conf /etc/ldap/slapd.conf
+cp $LXBASE/stanza/slapd.access.conf /etc/ldap/
+cp $LXBASE/stanza/schema/* /etc/ldap/schema/
+slapadd <$LXBASE/temp/init.ldif
+/etc/init.d/slapd start
