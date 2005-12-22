@@ -1,0 +1,56 @@
+<?php
+/* CONFIG START. DO NOT CHANGE ANYTHING IN OR AFTER THIS LINE. */
+// $Horde: imp/config/conf.xml,v 1.53 2004/12/09 15:33:27 slusarz Exp $
+$conf['utils']['spellchecker'] = '/usr/bin/aspell';
+$conf['utils']['gnupg_keyserver'] = array('wwwkeys.pgp.net');
+$conf['utils']['gnupg_timeout'] = '10';
+$conf['utils']['openssl_cafile'] = '/somewhere/ca-bundle.crt';
+$conf['utils']['openssl_binary'] = '/usr/bin/openssl';
+$conf['menu']['apps'] = array('turba');
+$conf['user']['allow_folders'] = true;
+$conf['user']['allow_view_source'] = true;
+$conf['user']['allow_resume_all'] = false;
+$conf['user']['allow_resume_all_in_drafts'] = false;
+$conf['user']['alternate_login'] = false;
+$conf['user']['redirect_on_logout'] = false;
+$conf['user']['select_sentmail_folder'] = false;
+$conf['server']['server_list'] = 'none';
+$conf['server']['change_server'] = false;
+$conf['server']['change_port'] = false;
+$conf['server']['change_protocol'] = false;
+$conf['server']['change_folders'] = false;
+$conf['server']['sort_limit'] = '0';
+$conf['server']['cache_folders'] = true;
+$conf['mailbox']['show_attachments'] = false;
+$conf['mailbox']['show_preview'] = false;
+$conf['mailbox']['show_xpriority'] = false;
+$conf['fetchmail']['show_account_colors'] = false;
+$conf['fetchmail']['size_limit'] = '4000000';
+$conf['msgsettings']['filtering']['words'] = './config/filter.txt';
+$conf['msgsettings']['filtering']['replacement'] = '****';
+$conf['spam']['reporting'] = true;
+$conf['spam']['program'] = '/usr/local/bin/sa-learn --spam';
+$conf['notspam']['reporting'] = true;
+$conf['notspam']['program'] = '/usr/local/bin/sa-learn --ham';
+$conf['msg']['prepend_header'] = true;
+$conf['msg']['append_trailer'] = true;
+$conf['compose']['use_vfs'] = false;
+$conf['compose']['allow_cc'] = true;
+$conf['compose']['allow_bcc'] = true;
+$conf['compose']['allow_receipts'] = true;
+$conf['compose']['special_characters'] = true;
+$conf['compose']['link_all_attachments'] = false;
+$conf['compose']['link_attachments'] = true;
+$conf['compose']['add_maildomain_to_unexpandable'] = false;
+$conf['compose']['attach_size_limit'] = '0';
+$conf['compose']['attach_count_limit'] = '0';
+$conf['hooks']['vinfo'] = false;
+$conf['hooks']['signature'] = false;
+$conf['hooks']['trailer'] = false;
+$conf['hooks']['fetchmail_filter'] = false;
+$conf['hooks']['mbox_redirect'] = false;
+$conf['hooks']['mbox_icon'] = false;
+$conf['hooks']['spam_bounce'] = false;
+$conf['maillog']['use_maillog'] = true;
+$conf['tasklist']['use_tasklist'] = true;
+/* CONFIG END. DO NOT CHANGE ANYTHING IN OR BEFORE THIS LINE. */
