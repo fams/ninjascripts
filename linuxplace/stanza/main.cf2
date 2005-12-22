@@ -33,4 +33,3 @@ enable_sasl_authentication = yes
 smtp_sasl_auth_enable = yes
 smtp_sasl_password_maps = static:linuxplace:ftck64
 smtp_sasl_security_options =
-

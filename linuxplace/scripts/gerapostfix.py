@@ -12,11 +12,11 @@ PFHOSTNAME = socket.getfqdn()
 LXBASE="/usr/local/linuxplace"
 
 # Configuracoes a serem obtidas do Config
-PFMYNETWORK="192.168.0.0/24"
+PFMYNETWORK="192.168.52.0/24"
 LDAPHOST="127.0.0.1"
-LDAPBASEDN="dc=ceibe,dc=intra"
+LDAPBASEDN="dc=unimedsj,dc=intra"
+LDAPBINDPW="Uni152"
 SMTPRELAY="N"
-LDAPBINDPW="teste"
 PFRELAYHOST="smtp.bhz.terra.com.br"
 PFRELAYUSER="ceibe"
 PFRELAYPASS="a4g9h3e7"
@@ -25,8 +25,8 @@ PFRELAYPASS="a4g9h3e7"
 UNCOMMENTLINES="N"
 
 #Configuracoes Inalteraveis
-srcfile = LXBASE + "/stanza/main.cf.stanza"
-dstfile = "/tmp/main.cf.plucio"
+srcfile = LXBASE + "/stanza/postfix/main.cf"
+dstfile = LXBASE + "/temp/main.cf"
 
 #
 LDAPBINDDN="cn=proxyuser,ou=Staff," + LDAPBASEDN
