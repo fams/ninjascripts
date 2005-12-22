@@ -4,6 +4,7 @@
 # Copyright 2004 by Fernando Augusto Medeiros Silva <fams at linuxplace dot com dot br>
 # Licensed under the GPL, version 2 or higher.
 #
+exit
 . /etc/gedai/config
 . /usr/share/gconfig/funcs.sh
 root=/usr/share/gconfig/root

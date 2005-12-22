@@ -4,6 +4,7 @@ import os
 import re
 import sys
 import socket
+import shutil
 
 # Pega o FQDN do servidor para usar no myhostname
 PFHOSTNAME = socket.getfqdn()
@@ -66,4 +67,9 @@ for line in stanza:
 
 # Fecha o arquivo gerado
 fp.close()
+
+#Copia master.cf, ainda temos que mexer muito nesse script
+shutil.copyfile( LXBASE + "/stanza/postfix/master.cf","/etc/postfix/master.cf")
+
+os.system("/usr/bin/maildirmake /etc/skel/Maildir")
 sys.exit(0)

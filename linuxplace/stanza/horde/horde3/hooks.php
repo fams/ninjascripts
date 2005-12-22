@@ -124,7 +124,7 @@
      {
          $ldapServer = '127.0.0.1';
          $ldapPort = '389';
-         $searchBase = 'ou=People,%PREFFIX%';
+         $searchBase = 'ou=People,%SUFFIX%';
 
          $ds = @ldap_connect($ldapServer, $ldapPort);
 

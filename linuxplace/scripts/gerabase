@@ -1,16 +1,35 @@
-LXBASE=/usr/local/linuxplace
-DOMAIN=unimedsj
-MAILDOMAIN=unimedsjdelrei.com.br
-EMPRESA=UnimedSJ
-SUFFIX="dc=$DOMAIN,dc=intra"
-cat $LXBASE/stanza/slapd.conf |sed "s/%SUFFIX%/$SUFFIX/" > $LXBASE/temp/slapd.conf
-cat $LXBASE/stanza/init.ldif |sed "s/%SUFFIX%/$SUFFIX/;s/%DOMAIN%/$DOMAIN/;s/%EMPRESA%/$EMPRESA/;s/%MAILDOMAIN%/$MAILDOMAIN/" > $LXBASE/temp/init.ldif
+#!/bin/sh
+LXBASE=/usr/local/linuxplace 
+. $LXBASE/config/ldap
+. $LXBASE/config/lxn
+. $LXBASE/config/horde
+
 /etc/init.d/slapd stop
+killall slapd
+#config
+cat $LXBASE/stanza/ldap/slapd.conf |sed "s/%SUFFIX%/$SUFFIX/" > $LXBASE/temp/slapd.conf
+cat $LXBASE/stanza/ldap/init.ldif |sed "s/%SUFFIX%/$SUFFIX/;s/%DOMAIN%/$DOMAIN/;s/%EMPRESA%/$EMPRESA/;s/%MAILDOMAIN%/$MAILDOMAIN/" > $LXBASE/temp/init.ldif
+cp $LXBASE/temp/slapd.conf /etc/ldap/slapd.conf
+cp $LXBASE/stanza/ldap/slapd.access.conf /etc/ldap/
+cp $LXBASE/stanza/ldap/schema/* /etc/ldap/schema/
+
+#preparando a base
 mv /var/lib/ldap/DB_CONFIG $LXBASE/temp/
 rm /var/lib/ldap/* 
 mv $LXBASE/temp/DB_CONFIG /var/lib/ldap/
-cp $LXBASE/temp/slapd.conf /etc/ldap/slapd.conf
-cp $LXBASE/stanza/slapd.access.conf /etc/ldap/
-cp $LXBASE/stanza/schema/* /etc/ldap/schema/
 slapadd <$LXBASE/temp/init.ldif
 /etc/init.d/slapd start
+
+###
+#Proxy user
+ldappasswd -D"cn=manager,$SUFFIX" -wlinuxplace -x "cn=proxyuser,ou=Staff,$SUFFIX" -s"$LDAPPROXYPASS"
+###
+#Poor's men authconfig
+#
+mkdir -p /home/usuarios
+rm -f /etc/nsswitch.conf
+cp -f $LXBASE/stanza/ldap/nsswitch.conf /etc/nsswitch.conf
+#config libnss-ldap
+rm -f /etc/libnss-ldap.conf
+cat $LXBASE/stanza/ldap/libnss-ldap.conf | sed -e " 
+s/%SUFFIX%/$SUFFIX/" > /etc/libnss-ldap.conf
