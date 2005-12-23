@@ -3,7 +3,7 @@ objectClass: top
 objectClass: dcObject
 objectClass: organization
 o: UnimedSJ
-dc: unimedsj
+dc: 
 
 dn: ou=People,dc=unimedsj,dc=intra
 ou: People
