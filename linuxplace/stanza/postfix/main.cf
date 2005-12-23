@@ -650,7 +650,7 @@ alias_maps = hash:/etc/aliases
 smtpd_recipient_limit = 20
 smtp_destination_recipient_limit = 20
 maximal_queue_lifetime = 2d
-mailbox_command = /usr/bin/maildrop -u $USER
+mailbox_command = /usr/bin/maildrop -d $USER
 content_filter = smtp-amavis:[127.0.0.1]:10024
 home_mailbox = Maildir/
 message_size_limit = 5120000
@@ -666,6 +666,9 @@ message_size_limit = 5120000
 #local_only = check_recipient_access hash:/etc/postfix/local_domains, reject
 #smtpd_recipient_restrictions = permit_mynetworks, reject_sender_login_mismatch, check_sender_access regexp:/etc/postfix/restricted_senders, permit_sasl_authenticated, reject_unauth_destination, reject_maps_rbl
 #smtpd_recipient_restrictions = reject_sender_login_mismatch, permit_sasl_authenticated, reject_unauth_destination, reject_maps_rbl
+
+
+smtpd_recipient_restrictions = permit_mynetworks, reject_unauth_destination,check_client_access hash:/etc/postfix/rbl-whitelist, reject_rbl_client relays.ordb.org, reject_rbl_client opm.blitzed.org, reject_rbl_client list.dsbl.org, reject_rbl_client sbl.spamhaus.org, reject_rbl_client blackholes.easynet.nl, reject_rbl_client cbl.abuseat.org, reject_rbl_client blackholes.mail-abuse.org, reject_unknown_sender_domain
 
 
 ###START-LDAP###

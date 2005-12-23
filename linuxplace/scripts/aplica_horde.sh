@@ -39,3 +39,7 @@ ln -s $ETCAPACHE/sites-available/webmail-int $ETCAPACHE/sites-enabled
 #externo
 cat $APACHEBASE/virtualdomain.stanza |sed "s/%ADMIN%/$ADMIN/;s/%VIRTUALDOMAIN%/$MAILDOMAIN/" > $ETCAPACHE/sites-available/webmail
 ln -s $ETCAPACHE/sites-available/webmail $ETCAPACHE/sites-enabled
+
+#hostname webmail para o hosts
+IPADDR=$(hostname --ip-address)
+echo "$IPADDR webmail.$MAILDOMAIN" >>/etc/hosts

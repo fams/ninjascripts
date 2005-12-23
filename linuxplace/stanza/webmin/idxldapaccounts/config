@@ -1,7 +1,7 @@
 letterhomes=0
 max_search_results=200
 crypt_passwords=1
-min_uid=1000
+min_uid=2000
 ldap_discussao_base=ou=mailinglists,ou=postfix,ou=System,%SUFFIX%
 mkntpwd_path=
 remove_personal_ab=1

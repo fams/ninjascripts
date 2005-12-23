@@ -70,6 +70,7 @@ fp.close()
 
 #Copia master.cf, ainda temos que mexer muito nesse script
 shutil.copyfile( LXBASE + "/stanza/postfix/master.cf","/etc/postfix/master.cf")
+shutil.copyfile( LXBASE + "/temp/main.cf","/etc/postfix/main.cf")
 
 os.system("/usr/bin/maildirmake /etc/skel/Maildir")
 sys.exit(0)

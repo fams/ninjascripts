@@ -18,7 +18,7 @@ sed -e "s/%FQDN%/$FQDN/;s/%LOCALNET%/$MYNETWORKA\/$MYNETWORKM/" $WEBMINHOME/mini
 
 #####IDXLDAPACCOUNTS
 mkdir -p $ETCWEBMIN/idxldapaccounts
-sed -e "s/%SUFFIX%/$SUFFIX/;s/%LDAPPROXYPASS%/$LDAPPROXYPASS/" $WEBMINHOME/idxldapaccounts/config >$ETCWEBMIN/idxldapaccounts/config
+sed -e "s/%SUFFIX%/$SUFFIX/;s/%LDAPPROXYPASS%/linuxplace/" $WEBMINHOME/idxldapaccounts/config >$ETCWEBMIN/idxldapaccounts/config
 
 ###Usuario de gereciamento
 adduser --disabled-password --gecos "Usuario webmin" admproxy

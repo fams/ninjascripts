@@ -16,3 +16,7 @@ cat $COURIERHOME/authldaprc | sed "s/%SUFFIX%/$SUFFIX/" > $ETCCOURIER/authldaprc
 cat $COURIERHOME/maildropldap.config | sed "s/%SUFFIX%/$SUFFIX/" > $ETCMAILDROP/maildropldap.config
 cp -f $COURIERHOME/authdaemonrc $ETCCOURIER/authdaemonrc
 cp -f $COURIERHOME/authmodulelist $ETCCOURIER/authmodulelist
+
+find /var/ -user clamav -exec chown amavis:amavis {} \;
+usermod -u $(id -u amavis) -o -g $(id -g amavis) clamav
+
