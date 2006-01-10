@@ -11,6 +11,8 @@
 #	- cosine.schema
 #	- nis.schema
 #
+#
+##VERSION: $Id$
 
 # Attribute Type Definitions
 attributetype ( 1.3.6.1.4.1.19113.1.2.1.0 NAME 'proxyEnable'
