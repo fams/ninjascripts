@@ -1,0 +1,11 @@
+Package: ninja-gateway
+Version: 0.1-1
+Section: main
+Priority: optional
+Architecture: all
+Depends: ninja-base, squid, sarg, webmin-sarg
+Installed-Size: 12
+Maintainer: Fernando Augusto Medeiros Silva <fams@linuxplace.com.br>
+Description: Ninja Project
+ This meta package will install Debian packages which build a system
+ for Ninja gateway
