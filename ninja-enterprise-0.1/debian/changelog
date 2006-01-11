@@ -1,4 +1,10 @@
-ninjaenterprise (0.1-1) stable; urgency=low
+ninja-enterprise (0.1-2) stable; urgency=low
+
+  *  Added initial packages
+
+ -- root <root@internet.unimedsjdelrei.com.br>  Wed, 11 Jan 2006 11:44:12 -0200
+
+ninja-enterprise (0.1-1) stable; urgency=low
 
   * Initial release
 

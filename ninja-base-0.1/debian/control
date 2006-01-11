@@ -7,7 +7,7 @@ Standards-Version: 3.5.6
 
 Package: ninja-base
 Architecture: all
-Depends: ldap-utils, ipcalc, dialog , shorewall, ssh, less, ntpdate, webmin, webmin-core, webmin-shorewall, webmin-sshd,webmin-updown, slapd, nscd, webmin-sysstats, webmin-idxldapaccounts-linuxplace, gnupg, gnupg-doc,  mondo, mindi, bzip2, lha, zoo, unrar, unarj, nomarch, ncompress, libnss-ldap, vim, expect, renattach, db4.2-util
+Depends: ldap-utils, ipcalc, dialog , shorewall, ssh, less, ntpdate, webmin, webmin-core, webmin-shorewall, webmin-sshd, webmin-updown, slapd, libpam-ldap, libnss-ldap, libnet-ldap-perl, libcrypt-smbhash-perl, libunicode-maputf8-perl, libdigest-sha1-perl, nscd, rrdtool, webmin-sysstats, webmin-idxldapaccounts-linuxplace, gnupg, gnupg-doc, mondo, mindi, bzip2, lha, zoo, unrar, unarj, nomarch, ncompress, vim, gpm, expect, renattach, db4.2-util
 Description: Ninja Project
  This meta package will install Debian packages which build a system
  for Ninja base system
