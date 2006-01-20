@@ -18,7 +18,7 @@ ETCIMP=/etc/horde/imp4
 ETCAPACHE=/etc/apache2
 
 #configs horde3
-cat $HORDEBASE/conf.php |sed "s/%SUFFIX%/$SUFFIX/;s/%ADMIN%/$ADMIN/;s/%MAILDOMAIN%/$MAILDOMAIN/" > $ETCHORDE/conf.php
+cat $HORDEBASE/conf.php |sed "s/%EMPRESA%/$EMPRESA/;s/%SUFFIX%/$SUFFIX/;s/%ADMIN%/$ADMIN/;s/%MAILDOMAIN%/$MAILDOMAIN/" > $ETCHORDE/conf.php
 cat $HORDEBASE/hooks.php |sed "s/%SUFFIX%/$SUFFIX/" > $ETCHORDE/hooks.php
 cp -f $HORDEBASE/prefs.php $ETCHORDE/prefs.php
 cp -f $HORDEBASE/nls.php $ETCHORDE/nls.php
