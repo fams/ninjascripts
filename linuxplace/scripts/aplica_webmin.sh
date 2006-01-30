@@ -3,6 +3,7 @@ LXHOME=/usr/local/linuxplace
 #Pega variáveis
 . $LXHOME/config/ldap
 . $LXHOME/config/lxn
+. $LXHOME/config/webmin
 
 #variáveis auxiliares
 #CAMINHOS
