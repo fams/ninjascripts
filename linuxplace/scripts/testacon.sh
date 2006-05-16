@@ -1,3 +1,8 @@
+# Reconex√o velox/virtua
+# necessario colocar no crond
+# author: <fams@linuxplace.com.br>
+# Version: $Id$
+
 INETIFACE=eth1
 PEER=$(route -n|grep $INETIFACE|grep ^0.0.0.0|awk '{print $2}')
 OPERADORA=virtua
