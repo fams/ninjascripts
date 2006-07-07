@@ -1,3 +1,3 @@
 LDAPPROXYPASS="ghz324L"
-DOMAIN="assedipa"
+DOMAIN="veterinaria"
 SUFFIX="dc=$DOMAIN,dc=intra"

@@ -13,13 +13,13 @@ PFHOSTNAME = socket.getfqdn()
 LXBASE="/usr/local/linuxplace"
 
 # Configuracoes a serem obtidas do Config
-PFMYNETWORK="192.168.0.0/24"
+PFMYNETWORK="192.168.1.0/24"
 LDAPHOST="127.0.0.1"
-LDAPBASEDN="dc=fabricax,dc=intra"
+LDAPBASEDN="dc=veterinaria,dc=intra"
 LDAPBINDPW="teste"
 SMTPRELAY="N"
 PFRELAYHOST="smtp.bhz.terra.com.br"
-PFRELAYUSER="ceibe"
+PFRELAYUSER="veterinaria"
 PFRELAYPASS="a4g9h3e7"
 
 # Configuracoes de seguranca (Nao alterar caso nao saiba do que se trata)
