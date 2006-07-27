@@ -1,4 +1,11 @@
 #!/usr/bin/perl -w
+#
+# 
+#Author: Fernando Augusto <fams@linuxplace.com.br>
+#
+#Version: $Id$
+#
+#
 my $userdn="ou=People,dc=grupounitas,dc=net";
 my $groupdn="ou=Groups,dc=grupounitas,dc=net";
 my $homebase="/home/";
