@@ -4,7 +4,7 @@
 # Version: $Id$
 
 INETIFACE=eth1
-PEER=$(route -n|grep $INETIFACE|grep ^0.0.0.0|awk '{print $2}')
+PEER=$(/sbin/route -n|grep $INETIFACE|grep ^0.0.0.0|awk '{print $2}')
 OPERADORA=virtua
 function reconecta(){
 	case "$1" in
@@ -28,7 +28,7 @@ esac
 if [ -z "$PEER" ];then
 	reconecta $OPERADORA
 fi
-result=$(ping -w 10 $PEER | grep  "100% packet loss")
+result=$(/bin/ping -w 10 $PEER | grep  "100% packet loss")
 if [ ! -z "$result" ];then
 	reconecta $OPERADORA
 fi
