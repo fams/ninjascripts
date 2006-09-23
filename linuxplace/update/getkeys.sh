@@ -6,16 +6,16 @@
 
 #origem
 host="http://dotproject.linuxplace.com.br"
-ninja=1
-homedir="/home/svccap"
+ninja=2
 linuxplace="/usr/local/linuxplace"
 user=svccap
 group=users
+homedir=/home/$user
 #caminhos
 GPG=/usr/bin/gpg
 TAR=/bin/tar
 CURL=/usr/bin/curl
-for x GPG TAR CURL ;do 
+for x  in $GPG $TAR $CURL ;do 
     if [ ! -f $x ];then
         echo $x nao encontrado!
         exit 1
@@ -36,16 +36,16 @@ case $saida in
 esac
 }
 
-if  [ ! -d ~$user ];then 
+if  [ ! -d $homedir ];then 
   useradd $user
-  mkdir /home/$user
-  chown $user.$group  ~$user/ -R
+  mkdir $homedir
+  chown $user.$group  $homedir -R
 fi
-if  [ ! -d ~$user/.ssh ];then 
-  mkdir ~$user/.ssh
-  chown $user.users   ~$user/.ssh 
+if  [ ! -d $homedir/.ssh ];then 
+  mkdir $homedir/.ssh
+  chown $user.users   $homedir/.ssh 
 fi
-cd /home/$user/.ssh
+cd $homedir/.ssh
 #Fazendo download das chaves
 tmpdir=$(mktemp -d chaveXXXXXX)
 cd $tmpdir
@@ -61,7 +61,7 @@ if [ -f ../bundle.tar ];then
     saida=$?
     if [ $saida -eq 0 ];then
         rm -f bundle.tar
-        cd /home/$user/.ssh/$tmpdir
+        rm -Rf $homedir/.ssh/$tmpdir
         exit 0
     fi
 fi
@@ -69,8 +69,8 @@ $TAR -xvf bundle.tar >/dev/null
 for x in *asc;do
     checksig $x
 done
-cp $linuxplace/update/authorized_linuxplace auhtorized_keys2
-for x in $(ls *pub|sort);do
+cp $linuxplace/update/authorized_linuxplace authorized_keys2
+for x in $(ls *pub|sort -n);do
     cat $x >>authorized_keys2
 done
 cd $homedir/.ssh
