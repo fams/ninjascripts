@@ -5,16 +5,12 @@
 # Version: $Id$
 
 #origem
-host="http://dotproject.linuxplace.com.br"
-ninja=2
-linuxplace="/usr/local/linuxplace"
-user=svccap
-group=users
-homedir=/home/$user
-#caminhos
-GPG=/usr/bin/gpg
-TAR=/bin/tar
-CURL=/usr/bin/curl
+if [ -f /usr/local/etc/getkeys.conf ];then
+	. /usr/local/etc/getkeys.conf
+else 
+	echo "Sem configuracao"
+	exit 1
+fi
 for x  in $GPG $TAR $CURL ;do 
     if [ ! -f $x ];then
         echo $x nao encontrado!
