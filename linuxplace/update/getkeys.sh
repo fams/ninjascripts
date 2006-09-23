@@ -1,11 +1,12 @@
 #!/bin/sh
+set -x
 # Atualizacao de chaves
 # necessario colocar no crond
 # author: <fams@linuxplace.com.br>
 # Version: $Id$
 
 #origem
-if [ "$1" -z ];
+if [ -z "$1" ];then
 	conf=/usr/local/etc/getkeys.conf
 else
 	conf=$1; 

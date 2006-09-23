@@ -1,6 +1,6 @@
 #Configuracao do getkeys
 host="http://dotproject.linuxplace.com.br"
-ninja=2
+ninja=1
 linuxplace="/usr/local/linuxplace"
 user=svccap
 group=users
