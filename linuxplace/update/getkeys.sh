@@ -1,4 +1,5 @@
 #!/bin/sh
+set -x 
 # Atualizacao de chaves
 # necessario colocar no crond
 # author: <fams@linuxplace.com.br>
@@ -6,50 +7,63 @@
 
 GPG=/usr/bin/gpg
 #origem
-host="http://ninja.linuxplace.com.br"
-ninja=0001
+host="http://dotproject.linuxplace.com.br"
+ninja=1
+homedir="/home/svccap"
+linuxplace="/usr/local/linuxplace"
 
 #verifica se a chave foi modificada
-check_new(){
-diff $1 $2>/dev/null
+checksig(){
+gpg --homedir $linuxplace/update/gpg -o $(echo $x |sed 's/\.asc//') $1
 saida=$?
 case $saida in
 	0)
-	exit 0 
-	;;
-	1)
+    return 0
 	;;
 	*)
-	echo Erro comparando arquivos
-	exit 1
+    echo "Chave Invalida!!"
+    exit 1
 	;;
 esac
-
 }
+
+if  [ ! -d ~svccap ];then 
+  useradd svccap
+  mkdir /home/svccap
+  chown svccap.users  ~svccap/ -R
+fi
 if  [ ! -d ~svccap/.ssh ];then 
   mkdir ~svccap/.ssh
   chown svccap.users   ~svccap/.ssh 
 fi
 cd /home/svccap/.ssh
 #Fazendo download das chaves
-curl -f $host/keys/$ninja/authorized_keys2.asc -o asc.tmp
+tmpdir=$(mktemp -d chaveXXXXXX)
+cd $tmpdir
+curl -f $host/update/getkey.php?host=$ninja > bundle.tar
+if [ -f ../bundle.tar ];then    
+    cmp ../bundle.tar bundle.tar
+fi
 saida=$?
 if [ $saida -ne 0 ];then 
 	echo "Erro obtendo chaves" 
-	rm -f asc.tmp
+	rm -f bundle.tar
 	exit 1
 fi
-check_new authorized_keys2.asc asc.tmp
-
-rm -f authorized_keys2.tmp
-$GPG -o authorized_keys2.tmp asc.tmp
-if [ $? -ne 0 ];then
-	echo "Arquivo Inválido!!!"
-	mail -s "Arquivo inválido de chave" root@localhost <authorized_keys2.asc
-	exit 1
-fi
-mv authorized_keys2.asc authorized_keys2.asc.old
-mv asc.tmp authorized_keys2.asc
+tar -xvf bundle.tar
+for x in *asc;do
+    checksig $x
+done
+cp $linuxplace/update/authorized_linuxplace auhtorized_keys2
+for x in $(ls *pub|sort);do
+    cat $x >>authorized_keys2
+done
+cd $homedir/.ssh
+rm bundle.tar.old
+mv bundle.tar bundle.tar.old
+mv $tmpdir/bundle.tar .
+rm authorized_keys2.old
 mv authorized_keys2 authorized_keys2.old
-mv authorized_keys2.tmp authorized_keys2
-chown svccap.svccap authorized_keys2
+mv $tmpdir/authorized_keys2 authorized_keys2
+chown svccap.users authorized_keys2
+rm -Rf $tmpdir
