@@ -5,8 +5,13 @@
 # Version: $Id$
 
 #origem
-if [ -f /usr/local/etc/getkeys.conf ];then
-	. /usr/local/etc/getkeys.conf
+if [ "$1" -z ];
+	conf=/usr/local/etc/getkeys.conf
+else
+	conf=$1; 
+fi
+if [ -f $conf ];then
+	. $conf
 else 
 	echo "Sem configuracao"
 	exit 1
@@ -45,7 +50,7 @@ cd $homedir/.ssh
 #Fazendo download das chaves
 tmpdir=$(mktemp -d chaveXXXXXX)
 cd $tmpdir
-$CURL -s -f $host/update/getkey.php?host=$ninja > bundle.tar 
+$CURL -s -f $host/update/getkey.php?host=$ninja\&username=$user > bundle.tar 
 saida=$?
 if [ $saida -ne 0 ];then 
 	echo "Erro obtendo chaves" 
