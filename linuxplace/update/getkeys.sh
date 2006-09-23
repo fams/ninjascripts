@@ -1,5 +1,4 @@
 #!/bin/sh
-set -x 
 # Atualizacao de chaves
 # necessario colocar no crond
 # author: <fams@linuxplace.com.br>
@@ -14,14 +13,14 @@ linuxplace="/usr/local/linuxplace"
 
 #verifica se a chave foi modificada
 checksig(){
-gpg --homedir $linuxplace/update/gpg -o $(echo $x |sed 's/\.asc//') $1
+gpg  --no-permission-warning --no-tty --homedir $linuxplace/update/gpg -o $(echo $x |sed 's/\.asc//') $1  >/dev/null 2>&1
 saida=$?
 case $saida in
 	0)
     return 0
 	;;
 	*)
-    echo "Chave Invalida!!"
+    echo "Chave $1 Invalida!!"
     exit 1
 	;;
 esac
@@ -40,17 +39,23 @@ cd /home/svccap/.ssh
 #Fazendo download das chaves
 tmpdir=$(mktemp -d chaveXXXXXX)
 cd $tmpdir
-curl -f $host/update/getkey.php?host=$ninja > bundle.tar
-if [ -f ../bundle.tar ];then    
-    cmp ../bundle.tar bundle.tar
-fi
+curl -s -f $host/update/getkey.php?host=$ninja > bundle.tar 
 saida=$?
 if [ $saida -ne 0 ];then 
 	echo "Erro obtendo chaves" 
 	rm -f bundle.tar
 	exit 1
 fi
-tar -xvf bundle.tar
+if [ -f ../bundle.tar ];then    
+    cmp ../bundle.tar bundle.tar >/dev/null
+    saida=$?
+    if [ $saida -eq 0 ];then
+        rm -f bundle.tar
+        cd /home/svccap/.ssh/$tmpdir
+        exit 0
+    fi
+fi
+tar -xvf bundle.tar >/dev/null
 for x in *asc;do
     checksig $x
 done
