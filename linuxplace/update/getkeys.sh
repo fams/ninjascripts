@@ -13,8 +13,14 @@ user=svccap
 group=users
 #caminhos
 GPG=/usr/bin/gpg
-TAR=/usr/bin/tar
+TAR=/bin/tar
 CURL=/usr/bin/curl
+for x GPG TAR CURL ;do 
+    if [ ! -f $x ];then
+        echo $x nao encontrado!
+        exit 1
+    fi
+done
 #verifica se a chave foi modificada
 checksig(){
 $GPG  --no-permission-warning --no-tty --homedir $linuxplace/update/gpg -o $(echo $x |sed 's/\.asc//') $1  >/dev/null 2>&1
