@@ -1,5 +1,4 @@
 #!/bin/sh
-set -x
 # Atualizacao de chaves
 # necessario colocar no crond
 # author: <fams@linuxplace.com.br>
