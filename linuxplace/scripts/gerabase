@@ -23,6 +23,8 @@ slapadd <$LXBASE/temp/init.ldif
 ###
 #Proxy user
 ldappasswd -D"cn=manager,$SUFFIX" -wlinuxplace -x "cn=proxyuser,ou=Staff,$SUFFIX" -s"$LDAPPROXYPASS"
+echo $LDAPPROXYPASS >/etc/ldap.secret
+echo $LDAPPROXYPASS >/etc/ldap.squid
 ###
 #Poor's men authconfig
 #

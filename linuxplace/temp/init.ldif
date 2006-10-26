@@ -1,59 +1,59 @@
-dn: dc=veterinaria,dc=intra
+dn: dc=superbh,dc=intra
 objectClass: top
 objectClass: dcObject
 objectClass: organization
-o: veterinaria
-dc: veterinaria
+o: supermercados bh
+dc: superbh
 
-dn: ou=People,dc=veterinaria,dc=intra
+dn: ou=People,dc=superbh,dc=intra
 ou: People
 objectClass: organizationalUnit
 
-dn: ou=Groups,dc=veterinaria,dc=intra
+dn: ou=Groups,dc=superbh,dc=intra
 ou: Groups
 objectClass: organizationalUnit
 
-dn: ou=Computers,dc=veterinaria,dc=intra
+dn: ou=Computers,dc=superbh,dc=intra
 ou: Computers
 objectClass: organizationalUnit
 
-dn: ou=Staff,dc=veterinaria,dc=intra
+dn: ou=Staff,dc=superbh,dc=intra
 ou: Staff
 objectClass: top
 objectClass: organizationalUnit
 
-dn: cn=proxyuser,ou=Staff,dc=veterinaria,dc=intra
+dn: cn=proxyuser,ou=Staff,dc=superbh,dc=intra
 objectClass: top
 objectClass: person
 sn: proxyuser
 cn: proxyuser
 
-dn: ou=personal_addressbook,dc=veterinaria,dc=intra
+dn: ou=personal_addressbook,dc=superbh,dc=intra
 ou: personal_addressbook
 objectClass: top
 objectClass: organizationalUnit
 
-dn: ou=System,dc=veterinaria,dc=intra
+dn: ou=System,dc=superbh,dc=intra
 ou: System
 objectClass: organizationalUnit
 
-dn: ou=postfix,ou=system,dc=veterinaria,dc=intra
+dn: ou=postfix,ou=system,dc=superbh,dc=intra
 ou: postfix
 objectClass: organizationalUnit
 structuralObjectClass: organizationalUnit
 
-dn: dc=domains,ou=postfix,ou=System,dc=veterinaria,dc=intra
+dn: dc=domains,ou=postfix,ou=System,dc=superbh,dc=intra
 associatedDomain: veterinaria.intra
 dc: domains
 objectClass: dNSDomain
 objectClass: domainRelatedObject
 
-dn: ou=mailinglists,ou=postfix,ou=System,dc=veterinaria,dc=intra
+dn: ou=mailinglists,ou=postfix,ou=System,dc=superbh,dc=intra
 ou: mailinglists
 objectClass: organizationalUnit
 structuralObjectClass: organizationalUnit
 
-dn: cn=users,ou=Groups,dc=veterinaria,dc=intra
+dn: cn=users,ou=Groups,dc=superbh,dc=intra
 objectClass: posixGroup
 cn: users
 gidNumber: 100

@@ -27,7 +27,7 @@ passwd -u admproxy
 echo admproxy:$WEBMINPW |/usr/sbin/chpasswd
 
 grep -v admproxy $ETCWEBMIN/miniserv.users >$ETCWEBMIN/miniserv.users.$$
-echo -e "admproxy:0:0::\n" >>$ETCWEBMIN/miniserv.users.$$
+echo -e "admproxy:x:0::\n" >>$ETCWEBMIN/miniserv.users.$$
 mv $ETCWEBMIN/miniserv.users $ETCWEBMIN/miniserv.users.old
 mv $ETCWEBMIN/miniserv.users.$$ $ETCWEBMIN/miniserv.users
 
