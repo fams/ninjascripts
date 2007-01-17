@@ -23,7 +23,7 @@ s/%SUFFIX%/$SUFFIX/g
 ">/etc/squid/squid.conf
 mkdir -p /etc/squid/acl 2>/dev/null
 test -f /etc/squid/acl/url_rest.acl || echo -e "-i\nmp3"> /etc/squid/acl/url_rest.acl
-test -f /etc/squid/acl/destino_priv.acl || echo "unimedmg.com.br"> /etc/squid/acl/destino_priv.acl
+test -f /etc/squid/acl/destino_priv.acl || echo "linuxplace.com.br"> /etc/squid/acl/destino_priv.acl
 test -f /etc/squid/acl/destino_noauth.acl || echo -e"obsupgdp.caixa.gov.br\nwindowsupdate.microsoft.com\nliveupdate.symantec.com\nsymantecliveupdate.com"> /etc/squid/acl/destino_noauth.acl
 test -f /etc/squid/acl/destino_rest.acl || echo "consumptionjunction.com" > /etc/squid/acl/destino_rest.acl
 test -f /etc/squid/acl/usuarios_priv.acl || echo "none" > /etc/squid/acl/usuarios_priv.acl
