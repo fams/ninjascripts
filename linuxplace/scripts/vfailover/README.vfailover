@@ -1,4 +1,5 @@
-$Id$
+#$Id$
+
 Este script foi criado para monitorar links (velox e dedicado) baseado em uma configuracao de iproute2 jah existente na maquina
 
 OBS.: os pacoutes iproute2 e perl devem estar instalados para que os scripts funcionem
