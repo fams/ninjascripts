@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#$Id$
+
 # Comandos
 IP="/sbin/ip"
 
