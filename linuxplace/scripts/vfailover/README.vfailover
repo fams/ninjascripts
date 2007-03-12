@@ -1,3 +1,4 @@
+$Id$
 Este script foi criado para monitorar links (velox e dedicado) baseado em uma configuracao de iproute2 jah existente na maquina
 
 OBS.: os pacoutes iproute2 e perl devem estar instalados para que os scripts funcionem
@@ -92,8 +93,26 @@ fi
 * Esta eh a parte mais complexa. Recebi informacoes (fams) que cada versao de kernel funciona de uma forma diferente, logo pode ser que seja necessario testar mais de uma forma:
 
 * FWMARK:
+(estas regras podem ser carregadas no boot)
+
+/sbin/ip rule add fwmark 1 table velox
+/sbin/ip rule add fwmark 2 table dedicado
+
+Agora qualquer pacote marcado pelo kernel (configurar a tabela mangle via iptables) com 1 usara o link do velox e com 2 o link dedicado. Isto deve ser testado a exaustao uma vez que se nao funcionar corretamente o script eh inutil (se baseia na monitoracao via ping por cada link).
+
+
 
 * IPROUTE2 puramente:
+/sbin/ip rule add to 201.133.111.1 table velox
+/sbin/ip rule add to 201.13.111.1 table dedicado
+
+Neste caso, estes hosts serao acessados:
+201.133.111.1 pelo velox
+201.13.111.1 pelo link dedicado
+
+LEMBRETE: Como dito anteriormente, deve-se avaliar qual destes modos funciona de forma correta (de acordo com informacoes que tive, isto depende da versao do kernel).
+
+
 
 
 TROUBLESHOOTING
