@@ -6,6 +6,7 @@
 #Paulo Lucio de Matos Campos Jr
 #paulo@linuxplace.com.br
 # Baseado script monitorar vpn
+# $Id$
 
 use POSIX qw(setsid);
 use strict;
