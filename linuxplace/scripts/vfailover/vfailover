@@ -1,0 +1,185 @@
+#!/usr/bin/env perl
+#
+#Monioracao de links epa
+#Fernando Augusto Medeiros Silva
+#fams@linuxplace.com.br
+#Paulo Lucio de Matos Campos Jr
+#paulo@linuxplace.com.br
+# Baseado script monitorar vpn
+
+use POSIX qw(setsid);
+use strict;
+my $cmd = "/usr/local/sbin/rota.sh";
+my $custommsg;
+%main::time;
+%main::state;
+%main::host;
+$main::timelimit="5";
+$main::receipt="plucio\@brfree.com.br";
+$main::from="root\@myserver.com.br";
+$main::oldstate="velox1:init1";
+open(LOG,">>/var/log/checkvelox");
+
+#deamonize
+chdir '/';
+umask 0;
+open (STDIN,'/dev/null') or die ('Nao foi possivel abrir /dev/null $!');
+open (STERR,'>/dev/null') or die ('Nao foi possivel abrir /dev/null $!');
+open (STOUT,'>/dev/null') or die ('Nao foi possivel abrir /dev/null $!');
+
+defined(my $pid = fork) or die ('Cannot fork');
+exit if $pid;
+setsid or die ('Nao foi possivel iniciar nova sessao');
+
+
+#iniciando estado dos links
+$main::time{'velox'}="0";
+$main::time{'dedicado'}="0";
+$main::state{'velox'}="0";
+$main::state{'dedicado'}="0";
+$main::host{'velox'}="200.97.11.90";
+$main::host{'dedicado'}="200.19.9.225";
+
+# Linha provisoria
+checkroute();
+
+#main loop
+for (my $i=0;$i<$main::timelimit;$i++){
+	checkstate('dedicado','velox');
+	sleep 10;
+}
+while(1){
+	checkstate('dedicado','velox');
+    if("velox$main::state{'velox'}:dedicado$main::state{'dedicado'}" ne $main::oldstate){
+        procevent($main::oldstate."->velox$main::state{'velox'}:dedicado$main::state{'dedicado'}");
+	$main::oldstate="velox$main::state{'velox'}:dedicado$main::state{'dedicado'}";
+    }
+    sleep 60;
+}
+####################SUBS###############3
+sub procevent{
+    my ($event) = @_;
+    SWITCH: {
+        #velox0:dedicado0
+        if ($event =~ /^velox0:dedicado0->velox0:dedicado1/) {
+            if(checkroute() ne "dedicado"){
+                unless (setroute("dedicado")){ $event="Erro em $event"};
+		$custommsg = "CONEXAO LINK DEDICADO REESTABELECIDA\nALTERANDO ROTA PARA LINK DEDICADO";
+	        }
+        last SWITCH;};#00->01
+        if ($event =~ /^velox0:dedicado0->velox1:dedicado0/) {
+            if(checkroute() ne "velox"){
+                unless (setroute("velox")){ $event="Erro em $event"};
+		$custommsg = "CONEXAO VELOX REESTABELECIDA\nALTERANDO ROTA PARA VELOX";
+	        }
+        last SWITCH; };#00->10
+        if ($event =~ /^velox0:dedicado0->velox1:dedicado1/)  { 
+            if(checkroute() ne "dedicado"){
+                unless (setroute("dedicado")){ $event="Erro em $event"};
+		$custommsg = "TODAS CONEXOES REESTABELECIDAS\nALTERANDO ROTA PARA LINK DEDICADO";
+            }
+        last SWITCH; };#00->11
+        #velox0:dedicado1 
+        if ($event =~ /^velox0:dedicado1->velox0:dedicado0/) { last SWITCH; };#01->00
+        if (/^velox0:dedicado1->velox1:dedicado0/)  { 
+            if(checkroute() ne "velox"){
+                unless (setroute("velox")){ $event="Erro em $event"};
+		$custommsg = "A CONEXAO LINK DEDICADO ESTA INATIVA\nMAS A CONEXAO VELOX FOI REESTABELECIDA\n ALTERANDO ROTA PARA VELOX";
+	        }
+        last SWITCH; };#01->10
+        if ($event =~ /^velox0:dedicado1->velox1:dedicado1/)   {
+            if($main::time{'velox'}<$main::timelimit){
+                $main::state{'velox'}=0;
+                unless (setroute("dedicado")){ $event="Erro em $event"};
+		$custommsg = "CONEXAO VELOX REESTABELECIDA\nMANTENDO ROTA PADRAO LINK DEDICADO";
+            }   
+            last SWITCH; };#01->11
+        #velox1:dedicado0
+        if ($event =~ /^velox1:dedicado0->velox0:dedicado0/){ last SWITCH; };#10->00
+        if ($event =~ /^velox1:dedicado0->velox0:dedicado1/) { 
+            if(checkroute() ne "dedicado"){
+                unless (setroute("dedicado")){ $event="Erro em $event"};
+            }
+        last SWITCH; };#10->01
+        if ($event =~ /^velox1:dedicado0->velox1:dedicado1/)  { 
+            if($main::time{'dedicado'}<$main::timelimit){
+                $main::state{'dedicado'}=0;
+            }else{   
+                if(checkroute() ne "dedicado"){
+                    unless (setroute("dedicado")){ $event="Erro em $event"};
+		$custommsg = "CONEXAO LINK DEDICADO REESTABELECIDA\nALTERANDO ROTA PARA LINK DEDICADO";
+                }
+            }
+        last SWITCH; };#10->11
+        #velox1:dedicado1
+        if ($event =~ /^velox1:dedicado1->velox0:dedicado0/) { last SWITCH; };#11->00
+        if ($event =~ /^velox1:dedicado1->velox0:dedicado1/)  { 
+            if(checkroute() ne "dedicado"){
+                unless (setroute("dedicado")){ $event="Erro em $event"};
+		$custommsg = "CONEXAO VELOX INATIVA\nMANTENDO ROTA PADRAO LINK DEDICADO";
+            }
+        last SWITCH; };#11->01
+        if ($event =~ /^velox1:dedicado1->velox1:dedicado0/)  { 
+            if(checkroute() ne "velox"){
+		unless (setroute("velox")){ $event="Erro em $event"};
+		$custommsg = "CONEXAO LINK DEDICADO INATIVA\nALTERANDO ROTA PARA VELOX";
+            }
+        last SWITCH; };#11->10
+    }
+    #my $date = gmtime();
+    my $date = localtime();
+    print LOG join(' ',$date,":", $event,"\n") ;
+    notify("$date\nMudanca de estado do link.\n $event\n $custommsg\n");
+}
+sub setroute{
+    my ($command) = @_;
+    my $parameter = "set" . $command;
+    my $tmp;
+    $tmp = `$cmd $parameter`;
+    chomp($tmp);
+    print LOG join(":", $tmp,"\n") ;
+    if ("$tmp" ne $command) {return undef;}
+}
+sub checkroute{
+    my $tmp;
+    $tmp = `$cmd show`;
+    chomp($tmp);
+    if ( "$tmp" eq "panic"){
+    	setroute("dedicado");
+    }
+    return "$tmp";
+}
+
+sub checkstate{
+    my @links=@_;
+    my $link;
+#    while($link = @links){
+     foreach $link (@links){
+        if(pinghost($main::host{$link},7)){
+            $main::time{$link}++;
+            $main::state{$link}=1;  
+        }else{
+            $main::time{$link}=0;
+            $main::state{$link}=0;  
+        }
+    }
+}
+sub notify{
+    my ($msg)=@_;
+
+open(SENDMAIL,"|/usr/sbin/sendmail -t -oi ");
+	my $mail;
+	$mail .= <<EOF;
+From:$main::from
+To:$main::receipt
+Subject: AVISO: Notificacao de Mudanca de link"
+            
+$msg
+EOF
+    print  SENDMAIL $mail;
+    close(SENDMAIL);
+}
+sub pinghost{
+    my($host,$timeout)=@_;
+    return (system("ping -w $timeout -c 2 $host >/dev/null")==0);
+    }
