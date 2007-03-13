@@ -41,6 +41,12 @@ $main::from="root\@meuservidor.com.br"; #Email remetente
 $main::host{'velox'}="200.97.11.1"; #ip que serah monitorado EXCLUSIVAMENTE pelo link do velox
 $main::host{'dedicado'}="200.195.95.225"; #ip que serah monitorado EXCLUSIVAMENTE pelo link dedicado
 
+Modo de usar:
+Executar: /usr/local/sbin/vfailover
+Deve-se colocar em algum script de inicializacao tambem, para que seja carregado apos um boot.
+IMPORTANTE: Soh executar apos toda a configuracao de iproute2 estar funcionando.
+
+
 
 
 APENDICE
@@ -114,6 +120,15 @@ Neste caso, estes hosts serao acessados:
 LEMBRETE: Como dito anteriormente, deve-se avaliar qual destes modos funciona de forma correta (de acordo com informacoes que tive, isto depende da versao do kernel).
 
 
+ALTERNATIVA
+-----------
+Uma alternativa ao uso do script, o que poupar a parte do monitoramento eh o uso do iproute2 para balance. Não testei se o mesmo faz failover juntamente com o balance, mas segue a configuracao necessario para isto:
+
+ip route add default scope global nexthop via $P1 dev $IF1 weight 1 nexthop via dev ppp0 weight 2
+
+onde $P1 eh o ip do gateway do link dedicado e $IF1 eh a interface do link dedicado
+
+OBS.: Como escrito no titulo desta secao, este procedimento eh uma ALTERNATIVA ao script, ou seja, ou use um ou use o outro.
 
 
 TROUBLESHOOTING
