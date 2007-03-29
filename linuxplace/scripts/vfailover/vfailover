@@ -15,11 +15,11 @@ my $custommsg;
 %main::time;
 %main::state;
 %main::host;
-$main::timelimit="5";
-$main::receipt="plucio\@brfree.com.br";
-$main::from="root\@myserver.com.br";
-$main::oldstate="velox1:init1";
-open(LOG,">>/var/log/checkvelox");
+$main::timelimit="1";
+$main::receipt="ti\@grupounitas.com";
+$main::from="fw\@grupounitas.com";
+$main::oldstate="primary0:secondary0";
+open(LOG,">>/var/log/checklink");
 
 #deamonize
 chdir '/';
@@ -34,96 +34,100 @@ setsid or die ('Nao foi possivel iniciar nova sessao');
 
 
 #iniciando estado dos links
-$main::time{'velox'}="0";
-$main::time{'dedicado'}="0";
-$main::state{'velox'}="0";
-$main::state{'dedicado'}="0";
-$main::host{'velox'}="200.97.11.90";
-$main::host{'dedicado'}="200.19.9.225";
+$main::time{'primary'}="0";
+$main::time{'secondary'}="0";
+$main::state{'primary'}="0";
+$main::state{'secondary'}="0";
+$main::host{'primary'}="201.17.146.1";
+$main::host{'secondary'}="200.244.40.177";
+$main::name{'primary'}="Virtua";
+$main::name{'secondary'}="Velox";
 
 # Linha provisoria
 checkroute();
 
 #main loop
 for (my $i=0;$i<$main::timelimit;$i++){
-	checkstate('dedicado','velox');
-	sleep 10;
+	checkstate('secondary','primary');
+	sleep 60;
 }
 while(1){
-	checkstate('dedicado','velox');
-    if("velox$main::state{'velox'}:dedicado$main::state{'dedicado'}" ne $main::oldstate){
-        procevent($main::oldstate."->velox$main::state{'velox'}:dedicado$main::state{'dedicado'}");
-	$main::oldstate="velox$main::state{'velox'}:dedicado$main::state{'dedicado'}";
+	checkstate('secondary','primary');
+    if("primary$main::state{'primary'}:secondary$main::state{'secondary'}" ne $main::oldstate){
+        procevent($main::oldstate."->primary$main::state{'primary'}:secondary$main::state{'secondary'}");
+	$main::oldstate="primary$main::state{'primary'}:secondary$main::state{'secondary'}";
     }
-    sleep 60;
+    sleep 10;
 }
 ####################SUBS###############3
 sub procevent{
     my ($event) = @_;
     SWITCH: {
-        #velox0:dedicado0
-        if ($event =~ /^velox0:dedicado0->velox0:dedicado1/) {
-            if(checkroute() ne "dedicado"){
-                unless (setroute("dedicado")){ $event="Erro em $event"};
-		$custommsg = "CONEXAO LINK DEDICADO REESTABELECIDA\nALTERANDO ROTA PARA LINK DEDICADO";
-	        }
-        last SWITCH;};#00->01
-        if ($event =~ /^velox0:dedicado0->velox1:dedicado0/) {
-            if(checkroute() ne "velox"){
-                unless (setroute("velox")){ $event="Erro em $event"};
+        #primary0:secondary0
+        if ($event =~ /^primary0:secondary0->primary0:secondary1/) {
+            if(checkroute() ne "secondary"){
+                unless (setroute("secondary")){ $event="Erro em $event"};
 		$custommsg = "CONEXAO VELOX REESTABELECIDA\nALTERANDO ROTA PARA VELOX";
 	        }
+        last SWITCH;};#00->01
+        if ($event =~ /^primary0:secondary0->primary1:secondary0/) {
+            if(checkroute() ne "primary"){
+                unless (setroute("primary")){ $event="Erro em $event"};
+		$custommsg = "CONEXAO LINK VIRTUA REESTABELECIDA\nALTERANDO ROTA PARA LINK VIRTUA";
+	        }
         last SWITCH; };#00->10
-        if ($event =~ /^velox0:dedicado0->velox1:dedicado1/)  { 
-            if(checkroute() ne "dedicado"){
-                unless (setroute("dedicado")){ $event="Erro em $event"};
-		$custommsg = "TODAS CONEXOES REESTABELECIDAS\nALTERANDO ROTA PARA LINK DEDICADO";
+        if ($event =~ /^primary0:secondary0->primary1:secondary1/)  { 
+            if(checkroute() ne "primary"){
+                unless (setroute("primary")){ $event="Erro em $event"};
+		$custommsg = "TODAS CONEXOES REESTABELECIDAS\nALTERANDO ROTA PARA LINK VIRTUA";
             }
         last SWITCH; };#00->11
-        #velox0:dedicado1 
-        if ($event =~ /^velox0:dedicado1->velox0:dedicado0/) { last SWITCH; };#01->00
-        if (/^velox0:dedicado1->velox1:dedicado0/)  { 
-            if(checkroute() ne "velox"){
-                unless (setroute("velox")){ $event="Erro em $event"};
-		$custommsg = "A CONEXAO LINK DEDICADO ESTA INATIVA\nMAS A CONEXAO VELOX FOI REESTABELECIDA\n ALTERANDO ROTA PARA VELOX";
+        #primary0:secondary1 
+        if ($event =~ /^primary0:secondary1->primary0:secondary0/) {
+	last SWITCH; };#01->00
+        if (/^primary0:secondary1->primary1:secondary0/)  { 
+            if(checkroute() ne "primary"){
+                unless (setroute("primary")){ $event="Erro em $event"};
+		$custommsg = "A CONEXAO LINK VELOX ESTA INATIVA\nMAS A CONEXAO VIRTUA FOI REESTABELECIDA\n ALTERANDO ROTA PARA VIRTUA";
 	        }
         last SWITCH; };#01->10
-        if ($event =~ /^velox0:dedicado1->velox1:dedicado1/)   {
-            if($main::time{'velox'}<$main::timelimit){
-                $main::state{'velox'}=0;
-                unless (setroute("dedicado")){ $event="Erro em $event"};
-		$custommsg = "CONEXAO VELOX REESTABELECIDA\nMANTENDO ROTA PADRAO LINK DEDICADO";
-            }   
-            last SWITCH; };#01->11
-        #velox1:dedicado0
-        if ($event =~ /^velox1:dedicado0->velox0:dedicado0/){ last SWITCH; };#10->00
-        if ($event =~ /^velox1:dedicado0->velox0:dedicado1/) { 
-            if(checkroute() ne "dedicado"){
-                unless (setroute("dedicado")){ $event="Erro em $event"};
+#            if($main::time{'primary'}<$main::timelimit){
+#                $main::state{'primary'}=0;
+#		print LOG joing(":","primary tem",$main::time{'primary'}," \n" );
+#	     }else{
+#            }   
+        if ($event =~ /^primary0:secondary1->primary1:secondary1/)   {
+                unless (setroute("primary")){ $event="Erro em $event"};
+		$custommsg = "CONEXAO VIRTUA REESTABELECIDA\nALTERANDO ROTA PADRAO LINK VIRTUA";
+        last SWITCH; };#01->11
+        #primary1:secondary0
+        if ($event =~ /^primary1:secondary0->primary0:secondary0/){ 
+        last SWITCH; };#10->00
+        if ($event =~ /^primary1:secondary0->primary0:secondary1/) { 
+            if(checkroute() ne "secondary"){
+                unless (setroute("secondary")){ $event="Erro em $event"};
+		$custommsg = "CONEXAO LINK VELOX REESTABELECIDA\nCONEXAO LINK VIRTUA INATIVA\rALTERANDO ROTA PARA LINK VELOX";
             }
         last SWITCH; };#10->01
-        if ($event =~ /^velox1:dedicado0->velox1:dedicado1/)  { 
-            if($main::time{'dedicado'}<$main::timelimit){
-                $main::state{'dedicado'}=0;
-            }else{   
-                if(checkroute() ne "dedicado"){
-                    unless (setroute("dedicado")){ $event="Erro em $event"};
-		$custommsg = "CONEXAO LINK DEDICADO REESTABELECIDA\nALTERANDO ROTA PARA LINK DEDICADO";
+        if ($event =~ /^primary1:secondary0->primary1:secondary1/)  { 
+                if(checkroute() ne "primary"){
+                    unless (setroute("primary")){ $event="Erro em $event"};
+		$custommsg = "CONEXAO LINK VELOX REESTABELECIDA\nMANTENDO ROTA PARA LINK VIRTUA";
                 }
-            }
         last SWITCH; };#10->11
-        #velox1:dedicado1
-        if ($event =~ /^velox1:dedicado1->velox0:dedicado0/) { last SWITCH; };#11->00
-        if ($event =~ /^velox1:dedicado1->velox0:dedicado1/)  { 
-            if(checkroute() ne "dedicado"){
-                unless (setroute("dedicado")){ $event="Erro em $event"};
-		$custommsg = "CONEXAO VELOX INATIVA\nMANTENDO ROTA PADRAO LINK DEDICADO";
+        #primary1:secondary1
+        if ($event =~ /^primary1:secondary1->primary0:secondary0/) { 
+	last SWITCH; };#11->00
+        if ($event =~ /^primary1:secondary1->primary0:secondary1/)  { 
+            if(checkroute() ne "secondary"){
+                unless (setroute("secondary")){ $event="Erro em $event"};
+		$custommsg = "CONEXAO VELOX INATIVA\nMANTENDO ROTA PADRAO LINK VIRTUA";
             }
         last SWITCH; };#11->01
-        if ($event =~ /^velox1:dedicado1->velox1:dedicado0/)  { 
-            if(checkroute() ne "velox"){
-		unless (setroute("velox")){ $event="Erro em $event"};
-		$custommsg = "CONEXAO LINK DEDICADO INATIVA\nALTERANDO ROTA PARA VELOX";
+        if ($event =~ /^primary1:secondary1->primary1:secondary0/)  { 
+            if(checkroute() ne "primary"){
+		unless (setroute("primary")){ $event="Erro em $event"};
+		$custommsg = "CONEXAO VELOX INATIVA\nCONEXAO LINK VIRTUA ATIVA\nMANTENDO ROTA PARA VIRTUA";
             }
         last SWITCH; };#11->10
     }
@@ -136,17 +140,21 @@ sub setroute{
     my ($command) = @_;
     my $parameter = "set" . $command;
     my $tmp;
-    $tmp = `$cmd $parameter`;
+    open( CMD, "-|", $cmd, $parameter );
+    chomp($tmp = <CMD>);
     chomp($tmp);
-    print LOG join(":", $tmp,"\n") ;
-    if ("$tmp" ne $command) {return undef;}
+    close CMD;
+    if ( $tmp ne $command ) {
+    	return undef;
+    }
+    return 1;
 }
 sub checkroute{
     my $tmp;
     $tmp = `$cmd show`;
     chomp($tmp);
     if ( "$tmp" eq "panic"){
-    	setroute("dedicado");
+    	setroute("secondary");
     }
     return "$tmp";
 }

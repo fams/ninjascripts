@@ -1,0 +1,8 @@
+#!/bin/sh
+# startup do vfailover
+. /etc/vfailover.conf
+if [ $1 -eq "start" ];then
+	/sbin/ip route add $PRI_NET dev eth1 table $PRI_TABLE
+	/sbin/ip route add default via $PRI_GW table $PRI_TABLE
+	/sbin/ip rule add from $PRI_IP table $PRI_TABLE
+fi
