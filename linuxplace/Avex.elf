@@ -1,0 +1,208 @@
+EurekaLog 5.1.2
+
+Application:
+-------------------------------------------------------
+  1.1 Start Date      : Tue, 3 Apr 2007 19:40:53 -0300
+  1.2 Name/Description: AvexDVD.exe
+  1.3 Version Number  : 4.0.0.0
+  1.4 Parameters      : 
+  1.5 Compilation Date: Tue, 19 Dec 2006 02:41:36 -0300
+
+Exception:
+-----------------------------------------------------------------------------------------------------
+  2.1 Date   : Tue, 3 Apr 2007 19:40:57 -0300
+  2.2 Address: 4015E5BC
+  2.3 Module : vcl60.bpl
+  2.4 Type   : EAccessViolation
+  2.5 Message: Access violation at address 4015E5BC in module 'vcl60.bpl'. Write of address 00000024.
+
+Active Controls:
+----------------------------------
+  3.1 Form Class   : Shell_TrayWnd
+  3.2 Form Text    : 
+  3.3 Control Class: 
+  3.4 Control Text : 
+
+Computer:
+-----------------------------------------------------
+  4.1 Name          : MEGATRON
+  4.2 User          : Pedro
+  4.3 Total Memory  : 1535 Mb
+  4.4 Free Memory   : 1076 Mb
+  4.5 Total Disk    : 39.06 Gb
+  4.6 Free Disk     : 11.57 Gb
+  4.7 System Up Time: 13 hours, 9 minutes, 17 seconds
+  4.8 Processor     : AMD Athlon(tm) XP 2600+
+  4.9 Display Mode  : 1024 x 768, 32 bit
+
+Operating System:
+------------------------------------
+  5.1 Type    : Microsoft Windows XP
+  5.2 Build # : 2600
+  5.3 Update  : Service Pack 1
+  5.4 Language: Portuguese
+
+Network:
+---------------------------------
+  6.1 IP Address: 192.168.001.002
+  6.2 Submask   : 255.255.255.000
+  6.3 Gateway   : 192.168.001.001
+  6.4 DNS 1     : 192.168.001.001
+  6.5 DNS 2     : 000.000.000.000
+  6.6 DHCP      : OFF            
+
+Call Stack Information:
+--------------------------------------------------------------------------------------------------
+|Address |Module      |Unit                  |Class       |Procedure/Method            |Line     |
+--------------------------------------------------------------------------------------------------
+| Running Thread: ID=1260; Priority=0; Class=; [Main]                                            |
+|------------------------------------------------------------------------------------------------|
+|4015E5BC|vcl60.bpl   |Valedit.pas           |TItemProp   |SetEditStyle                |         |
+|0040505C|AvexDVD.exe |?cHoDGPxdlEDM0zDksSKo=|            |?yiR/IMo+ZkKCOQ==           |1090[254]|
+|77F51773|ntdll.dll   |                      |            |RtlAllocateHeap             |         |
+|77F517AD|ntdll.dll   |                      |            |RtlAllocateHeap             |         |
+|77D4910E|user32.dll  |                      |            |SystemParametersInfoA       |         |
+|77D28579|user32.dll  |                      |            |IsCharAlphaNumericA         |         |
+|77D49123|user32.dll  |                      |            |SystemParametersInfoA       |         |
+|4002B428|rtl60.bpl   |Classes.pas           |TList       |Get                         |         |
+|400F322F|vcl60.bpl   |Forms.pas             |TScreen     |GetCustomForms              |         |
+|400F3224|vcl60.bpl   |Forms.pas             |TScreen     |GetCustomForms              |         |
+|400F3D9C|vcl60.bpl   |Forms.pas             |TScreen     |AlignForms                  |         |
+|77F75690|ntdll.dll   |                      |            |RtlLeaveCriticalSection     |         |
+|00364433|BORLNDMM.DLL|Borlndmm.pas          |            |SysFreeMem                  |         |
+|77F52BCC|ntdll.dll   |                      |            |RtlUnicodeToMultiByteN      |         |
+|77F52F18|ntdll.dll   |                      |            |RtlUnicodeStringToAnsiString|         |
+|77F51908|ntdll.dll   |                      |            |RtlImageDirectoryEntryToData|         |
+|77F75690|ntdll.dll   |                      |            |RtlLeaveCriticalSection     |         |
+|40005A68|rtl60.bpl   |System.pas            |TObject     |FieldAddress                |         |
+|4003824B|rtl60.bpl   |Classes.pas           |TComponent  |SetReference                |         |
+|40002FC9|rtl60.bpl   |System.pas            |            |_GetMem                     |         |
+|77F511A2|ntdll.dll   |                      |            |RtlNtStatusToDosErrorNoTeb  |         |
+|77F51195|ntdll.dll   |                      |            |RtlNtStatusToDosError       |         |
+|77F5119A|ntdll.dll   |                      |            |RtlNtStatusToDosError       |         |
+|40037DD8|rtl60.bpl   |Classes.pas           |TComponent  |Notification                |         |
+|77F75690|ntdll.dll   |                      |            |RtlLeaveCriticalSection     |         |
+|0036428A|BORLNDMM.DLL|Borlndmm.pas          |            |SysGetMem                   |         |
+|00364267|BORLNDMM.DLL|Borlndmm.pas          |            |SysGetMem                   |         |
+|400EDDA1|vcl60.bpl   |Forms.pas             |TCustomForm |DoCreate                    |         |
+|400F59A1|vcl60.bpl   |Forms.pas             |TApplication|CreateForm                  |         |
+|400F5970|vcl60.bpl   |Forms.pas             |TApplication|CreateForm                  |         |
+|00401FE9|AvexDVD.exe |?cH1Rxp3yRBTsb        |            |?FZsBRWbKtA==               |41[9]    |
+--------------------------------------------------------------------------------------------------
+
+Modules Information:
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|Handle  |Name        |Description                                                                |Version        |Size   |Modified           |Path                                                                                                |
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|00320000|vclx60.bpl  |Borland Extended Component Package                                         |6.0.6.163      |213504 |2006-05-21 02:00:00|C:\Arquivos de programas\Avex\Avex DVD & Video Converter Pack                                       |
+|00360000|BORLNDMM.DLL|Borland Memory Manager                                                     |6.0.10.155     |22016  |2006-05-21 02:10:00|C:\Arquivos de programas\Avex\Avex DVD & Video Converter Pack                                       |
+|00370000|AVFORMAT.DLL|                                                                           |               |450836 |2006-10-09 01:55:14|C:\Arquivos de programas\Avex\Avex DVD & Video Converter Pack                                       |
+|00400000|AvexDVD.exe |                                                                           |4.0.0.0        |1753088|2006-12-19 02:41:36|C:\Arquivos de programas\Avex\Avex DVD & Video Converter Pack                                       |
+|011D0000|te_cb6.bpl  |                                                                           |               |1993728|2006-05-30 16:12:48|C:\Arquivos de programas\Avex\Avex DVD & Video Converter Pack                                       |
+|013E0000|PDVDI.DLL   |                                                                           |               |626688 |2005-11-08 02:00:44|C:\Arquivos de programas\Avex\Avex DVD & Video Converter Pack                                       |
+|01480000|AVCODEC.DLL |                                                                           |               |7148131|2006-10-08 03:08:42|C:\Arquivos de programas\Avex\Avex DVD & Video Converter Pack                                       |
+|02D20000|dxdiagn.dll |Ferramenta de diagnóstico do DirectX da Microsoft                          |5.3.1.904      |1769472|2004-07-09 04:27:28|C:\WINDOWS\System32                                                                                 |
+|03430000|devenum.dll |Enumeração de dispositivos.                                                |6.5.1.902      |132608 |2003-05-30 09:00:02|C:\WINDOWS\System32                                                                                 |
+|03460000|msdmo.dll   |                                                                           |6.5.1.900      |13312  |2002-12-12 00:14:32|C:\WINDOWS\System32                                                                                 |
+|036E0000|iac25_32.ax |Indeo® audio software                                                      |2.0.5.52       |199680 |1998-05-07 23:56:06|C:\WINDOWS\System32                                                                                 |
+|03B30000|ctmp3.acm   |MP3 CODEC for MSACM                                                        |5.1.1.0        |364544 |2001-09-24 05:01:00|C:\WINDOWS\System32                                                                                 |
+|062D0000|SSSensor.dll|ScreenSaver Sensor                                                         |5.5.0.5        |83096  |2004-06-30 15:06:00|C:\WINDOWS\System32                                                                                 |
+|070D0000|WMASF.DLL   |Windows Media ASF DLL                                                      |10.0.0.3646    |229376 |2004-08-11 00:41:00|C:\WINDOWS\System32                                                                                 |
+|07E60000|wmspdmoe.dll|Windows Media Audio 9 Voice Encoder                                        |10.0.0.3646    |936960 |2004-08-11 00:45:14|C:\WINDOWS\System32                                                                                 |
+|08190000|wmadmoe.dll |Windows Media Audio Encoder/Transcoder                                     |10.0.0.3646    |712704 |2004-08-11 00:45:16|C:\WINDOWS\System32                                                                                 |
+|086C0000|WMVCORE.DLL |Windows Media Playback/Authoring DLL                                       |10.0.0.3646    |2362104|2004-08-11 01:39:08|C:\WINDOWS\System32                                                                                 |
+|10000000|PDVDB.DLL   |                                                                           |               |647168 |2004-11-15 03:10:54|C:\Arquivos de programas\Avex\Avex DVD & Video Converter Pack                                       |
+|32600000|CC3260MT.DLL|Borland C++ Multi-thread RTL (WIN/VCL MT)                                  |6.0.1.0        |1500160|2006-05-21 02:12:00|C:\Arquivos de programas\Avex\Avex DVD & Video Converter Pack                                       |
+|35500000|quartz.dll  |Tempo de execução do DirectShow.                                           |6.5.1.902      |1962496|2003-05-30 09:00:02|C:\WINDOWS\System32                                                                                 |
+|40000000|rtl60.bpl   |Borland Component Package                                                  |6.0.6.243      |685056 |2003-01-30 08:04:00|C:\Arquivos de programas\Avex\Avex DVD & Video Converter Pack                                       |
+|400B0000|vcl60.bpl   |Borland Component Package                                                  |6.0.6.238      |1326080|2002-01-30 18:43:22|C:\Arquivos de programas\Avex\Avex DVD & Video Converter Pack                                       |
+|4FEC0000|OLE32.DLL   |Microsoft OLE para Windows e Windows NT                                    |5.1.2600.1619  |1258496|2005-01-14 02:33:58|C:\WINDOWS\system32                                                                                 |
+|51080000|dsound.dll  |DirectSound                                                                |5.3.1.904      |381952 |2004-07-09 04:27:28|C:\WINDOWS\System32                                                                                 |
+|586D0000|tssoft32.acm|Codec de áudio DSP Group TrueSpeech(TM) para MSACM V3.50                   |1.1.1.5        |8192   |2003-10-22 13:10:22|C:\WINDOWS\System32                                                                                 |
+|586E0000|sl_anet.acm |Audio codec for MS ACM                                                     |3.2.0.0        |86016  |2002-09-09 10:04:08|C:\WINDOWS\System32                                                                                 |
+|58700000|msgsm32.acm |CODEC de áudio Microsoft GSM 6.10 para MSACM                               |5.1.2600.0     |19968  |2003-10-22 13:09:46|C:\WINDOWS\System32                                                                                 |
+|58710000|msg723.acm  |Microsoft G.723.1 CODEC para MSACM
+                                        |4.4.0.3400     |118784 |2003-10-22 13:09:44|C:\WINDOWS\System32                                                                                 |
+|58730000|msg711.acm  |CODEC Microsoft CCITT G.711 (A-Law e u-Law) para MSACM                     |5.1.2600.0     |9216   |2003-10-22 13:09:44|C:\WINDOWS\System32                                                                                 |
+|58740000|msaud32.acm |Windows Media Audio                                                        |8.0.0.4487     |294912 |2002-09-09 10:04:08|C:\WINDOWS\System32                                                                                 |
+|58790000|l3codeca.acm|MPEG Layer-3 Audio Codec for MSACM                                         |1.9.0.305      |290816 |2002-09-09 10:04:10|C:\WINDOWS\System32                                                                                 |
+|58820000|imaadp32.acm|CODEC IMA ADPCM para MSACM                                                 |5.1.2600.1106  |14848  |2002-09-09 10:04:10|C:\WINDOWS\System32                                                                                 |
+|5B1C0000|uxtheme.dll |Biblioteca UxTheme Microsoft                                               |6.0.2800.1106  |204288 |2002-09-09 10:08:20|C:\WINDOWS\System32                                                                                 |
+|5EF80000|ksuser.dll  |User CSA Library                                                           |5.3.0.900      |4096   |2002-12-12 00:14:32|C:\WINDOWS\System32                                                                                 |
+|5F250000|olepro32.dll|Microsoft (R) OLE Property Support DLL                                     |5.0.5014.0     |106496 |2003-10-22 13:10:00|C:\WINDOWS\System32                                                                                 |
+|60F00000|ksproxy.ax  |WDM Streaming ActiveMovie Proxy                                            |5.3.0.900      |117248 |2002-12-12 00:14:32|C:\WINDOWS\System32                                                                                 |
+|70A70000|SHLWAPI.dll |Biblioteca de utilitário abreviado para Shell                              |6.0.2800.1612  |402944 |2004-12-07 20:15:20|C:\WINDOWS\system32                                                                                 |
+|71A60000|WS2HELP.dll |DLL de ajuda do Windows Socket 2.0 para Windows NT                         |5.1.2600.0     |18944  |2003-10-22 13:10:32|C:\WINDOWS\System32                                                                                 |
+|71A70000|WS2_32.dll  |Windows Socket 2.0 32-Bit DLL                                              |5.1.2600.0     |75264  |2003-10-22 13:10:32|C:\WINDOWS\System32                                                                                 |
+|71A90000|wsock32.dll |DLL de soquete para Windows de 32 bits                                     |5.1.2600.0     |24064  |2003-10-22 13:10:32|C:\WINDOWS\System32                                                                                 |
+|71AE0000|mpr.dll     |DLL do roteador provedor múltiplo                                          |5.1.2600.0     |55808  |2003-10-22 13:09:42|C:\WINDOWS\system32                                                                                 |
+|72CA0000|msadp32.acm |CODEC Microsoft ADPCM para MSACM                                           |5.1.2600.1106  |13312  |2002-09-09 10:05:44|C:\WINDOWS\System32                                                                                 |
+|72CC0000|msacm32.drv |Mapeador de som da Microsoft                                               |5.1.2600.0     |20992  |2003-10-22 13:09:44|C:\WINDOWS\System32                                                                                 |
+|72CD0000|wdmaud.drv  |WDM Audio driver mapper                                                    |5.1.2600.0     |22016  |2003-10-22 13:09:24|C:\WINDOWS\System32                                                                                 |
+|72FB0000|winspool.drv|Driver de spooler do Windows                                               |5.1.2600.1106  |132608 |2002-09-09 10:09:00|C:\WINDOWS\System32                                                                                 |
+|73B20000|tsd32.dll   |                                                                           |1.3.3.7        |15360  |2003-10-22 13:10:22|C:\WINDOWS\System32                                                                                 |
+|73B80000|MSVFW32.DLL |DLL do Microsoft Vídeo para Windows                                        |5.1.2600.1106  |114688 |2002-09-09 10:07:54|C:\WINDOWS\System32                                                                                 |
+|74C40000|OLEACC.dll  |Active Accessibility Core Component                                        |4.2.5406.0     |163328 |2003-10-22 13:10:00|C:\WINDOWS\System32                                                                                 |
+|74CF0000|oledlg.dll  |Suporte à interface de usuário do Microsoft Windows(TM) OLE 2.0            |5.1.2600.0     |118784 |2003-10-22 13:10:00|C:\WINDOWS\System32                                                                                 |
+|74E90000|wbemsvc.dll |WMI                                                                        |5.1.2600.0     |48128  |2003-10-22 13:10:26|C:\WINDOWS\System32\wbem                                                                            |
+|74EB0000|wbemprox.dll|WMI                                                                        |5.1.2600.1106  |28160  |2002-09-09 10:08:22|C:\WINDOWS\System32\wbem                                                                            |
+|74F80000|lhacm.acm   |Lernout & Hauspie Codecs                                                   |4.4.0.3385     |34064  |2006-04-08 12:10:14|C:\WINDOWS\System32                                                                                 |
+|75250000|wbemcomn.dll|WMI                                                                        |5.1.2600.1106  |215040 |2002-09-09 10:08:20|C:\WINDOWS\System32\wbem                                                                            |
+|75660000|fastprox.dll|WMI                                                                        |5.1.2600.1106  |565248 |2002-09-09 10:07:14|C:\WINDOWS\System32\wbem                                                                            |
+|75F10000|Apphelp.dll |Application Compatibility Client Library                                   |5.1.2600.1106  |111616 |2002-09-09 10:07:00|C:\WINDOWS\system32                                                                                 |
+|76050000|MSVCP60.dll |Microsoft (R) C++ Runtime Library                                          |6.0.8972.0     |401462 |2002-09-09 10:07:54|C:\WINDOWS\System32                                                                                 |
+|76350000|msimg32.dll |GDIEXT Client DLL                                                          |5.1.2600.1106  |4608   |2002-09-09 10:07:48|C:\WINDOWS\System32                                                                                 |
+|76360000|IMM32.DLL   |Windows XP IMM32 API Client DLL                                            |5.1.2600.1106  |103936 |2002-09-09 10:07:22|C:\WINDOWS\System32                                                                                 |
+|76380000|comdlg32.dll|DLL de diálogos comuns                                                     |6.0.2800.1106  |257024 |2002-09-09 10:07:04|C:\WINDOWS\system32                                                                                 |
+|76650000|setupapi.dll|API de instalação do Windows                                               |5.1.2600.1106  |943104 |2002-09-09 10:08:04|C:\WINDOWS\System32                                                                                 |
+|76B20000|winmm.dll   |MCI API DLL                                                                |5.1.2600.1106  |174592 |2002-09-09 10:08:22|C:\WINDOWS\System32                                                                                 |
+|76BD0000|PSAPI.DLL   |Process Status Helper                                                      |5.1.2600.1106  |17408  |2002-09-09 10:08:02|C:\WINDOWS\System32                                                                                 |
+|76E60000|rtutils.dll |Routing Utilities                                                          |5.1.2600.0     |39936  |2003-10-22 13:10:12|C:\WINDOWS\System32                                                                                 |
+|76E90000|tapi32.dll  |DLL cliente da API de telefonia do Microsoft® Windows(TM)                  |5.1.2600.1106  |165376 |2002-09-09 10:08:18|C:\WINDOWS\System32                                                                                 |
+|77030000|COMRes.dll  |                                                                           |2001.12.4414.42|821760 |2003-10-22 13:09:04|C:\WINDOWS\System32                                                                                 |
+|77100000|oleaut32.dll|Microsoft OLE 3.50  for Windows NT(TM) and Windows 95(TM) Operating Systems|3.50.5016.0    |569344 |2002-09-09 10:08:00|C:\WINDOWS\system32                                                                                 |
+|77320000|comctl32.dll|Common Controls Library                                                    |5.82.2800.1106 |557056 |2002-09-09 10:07:04|C:\WINDOWS\system32                                                                                 |
+|77BB0000|midimap.dll |Mapeador de MIDI da Microsoft                                              |5.1.2600.0     |17920  |2003-10-22 13:09:40|C:\WINDOWS\System32                                                                                 |
+|77BC0000|MSACM32.dll |Filtro de áudio do gerenciador de compactação de áudio da Microsoft        |5.1.2600.0     |67072  |2003-10-22 13:09:44|C:\WINDOWS\System32                                                                                 |
+|77BE0000|version.dll |Version Checking and File Installation Libraries                           |5.1.2600.0     |16384  |2003-10-22 13:10:24|C:\WINDOWS\system32                                                                                 |
+|77BF0000|MSVCRT.DLL  |Windows NT CRT DLL                                                         |7.0.2600.1106  |323072 |2002-09-09 10:07:54|C:\WINDOWS\system32                                                                                 |
+|77C50000|GDI32.dll   |GDI Client DLL                                                             |5.1.2600.1106  |250368 |2002-09-09 10:07:18|C:\WINDOWS\system32                                                                                 |
+|77D20000|user32.dll  |DLL de Cliente API de usuário Windows XP                                   |5.1.2600.1634  |561664 |2005-03-02 15:21:52|C:\WINDOWS\system32                                                                                 |
+|77DB0000|ADVAPI32.dll|API de base do Windows 32 avançada                                         |5.1.2600.1106  |624128 |2002-09-09 10:07:00|C:\WINDOWS\system32                                                                                 |
+|77E50000|kernel32.dll|DLL cliente da API BASE do Windows NT                                      |5.1.2600.1106  |969216 |2002-09-09 10:07:28|C:\WINDOWS\system32                                                                                 |
+|77F50000|ntdll.dll   |DLL de nível do NT                                                         |5.1.2600.1106  |684544 |2002-09-09 10:06:48|C:\WINDOWS\System32                                                                                 |
+|78000000|RPCRT4.dll  |Remote Procedure Call Runtime                                              |5.1.2600.1361  |535552 |2004-03-05 23:20:02|C:\WINDOWS\system32                                                                                 |
+|78090000|comctl32.dll|User Experience Controls Library                                           |6.0.2800.1643  |925184 |2005-03-11 17:52:00|C:\WINDOWS\WinSxS\x86_Microsoft.Windows.Common-Controls_6595b64144ccf1df_6.0.2600.1643_x-ww_7c3a9bc6|
+|7A210000|CLBCATQ.DLL |                                                                           |2001.12.4414.53|499712 |2004-03-05 23:20:02|C:\WINDOWS\System32                                                                                 |
+|7C340000|MSVCR71.dll |Microsoft® C Runtime Library                                               |7.10.3052.4    |348160 |2003-02-21 07:42:22|C:\WINDOWS\System32                                                                                 |
+|7CCC0000|SHELL32.dll |DLL comum do Shell do Windows                                              |6.0.2800.1643  |8378368|2005-03-11 22:52:04|C:\WINDOWS\system32                                                                                 |
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Registers:
+-----------------------------
+EAX: 00000018   EDI: 0012FB58
+EBX: 021AC288   ESI: 0012FD64
+ECX: 0012FB2C   ESP: 0012FB38
+EDX: 00000002   EIP: 4015E5BC
+
+Stack:               Memory Dump:
+------------------   ---------------------------------------------------------------------------
+0012FB38: 00405061   4015E5BC: 88 50 0C E8 9C 00 00 00 C3 8D 40 00 53 56 8B F2  .P........@.SV..
+0012FB3C: 00536EFE   4015E5CC: 8B D8 8D 43 1C 8B D6 E8 28 2C F5 FF 5E 5B C3 90  ...C....(,..^[..
+0012FB40: 021E6644   4015E5DC: 89 50 14 E8 7C 00 00 00 C3 8D 40 00 53 56 8B D8  .P..|.....@.SV..
+0012FB44: 021AC288   4015E5EC: 8B 73 10 85 F6 74 0B 8B C6 8B 10 FF 52 14 85 C0  .s...t......R...
+0012FB48: 005C3A43   4015E5FC: 7F 05 33 C0 5E 5B C3 B0 01 5E 5B C3 53 56 8B D8  ..3.^[...^[.SV..
+0012FB4C: 7469746E   4015E60C: 83 7B 10 00 75 1B B2 01 A1 54 E0 17 40 E8 D2 2A  .{..u....T..@..*
+0012FB50: 2E64656C   4015E61C: F5 FF 8B F0 89 73 10 89 5E 24 C7 46 20 84 E6 15  .....s..^$.F ...
+0012FB54: 00766D77   4015E62C: 40 8B 43 10 5E 5B C3 90 53 56 8B F2 8B D8 8B C3  @.C.^[..SV......
+0012FB58: 77F517E6   4015E63C: E8 C7 FF FF FF 8B D6 8B 08 FF 51 08 8B C3 E8 11  ..........Q.....
+0012FB5C: 77F51778   4015E64C: 00 00 00 5E 5B C3 8B C0 88 50 18 E8 04 00 00 00  ...^[....P......
+0012FB60: 77F517B2   4015E65C: C3 8D 40 00 8B 50 04 85 D2 74 1C 80 BA 8D 02 00  ..@..P...t......
+0012FB64: 00000105   4015E66C: 00 00 74 13 8B 8A DC 02 00 00 83 79 08 00 75 07  ..t........y..u.
+0012FB68: 00000000   4015E67C: 8B C2 E8 A9 52 FF FF C3 53 8B D8 80 7B 0C 00 75  ....R...S...{..u
+0012FB6C: 0012FF14   4015E68C: 1B 8B C3 E8 74 FF FF FF 8B 10 FF 52 14 85 C0 7E  ....t......R...~
+0012FB70: 000B0280   4015E69C: 0B B2 02 8B C3 E8 16 FF FF FF 5B C3 80 7B 0C 02  ..........[..{..
+0012FB74: 00000047   4015E6AC: 75 19 8B C3 E8 53 FF FF FF 8B 10 FF 52 14 85 C0  u....S......R...
+
+
+
