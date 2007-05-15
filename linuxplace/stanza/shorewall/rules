@@ -345,6 +345,21 @@ ACCEPT	fw	net	tcp	1025:65534	-	-	-	proxy
 ACCEPT	fw	net	tcp	21,80,443	-	-	-	proxy		
 ACCEPT	fw	net	tcp	-	-	-	-	root
 ACCEPT	fw	net	udp	-	-	-	-	root
+###################Orkut########################
+DROP    loc     net:72.14.209.85,72.14.209.86,72.14.209.87,72.14.209.94 tcp     443
+#
+#bloqueio de portas p2p
+##
+#DROP    loc     net     tcp     1214    - #kazaa
+#DROP    loc     net     tcp     4662    - #emule
+#DROP    loc     net     tcp     4672    - #emule
+#DROP    loc     net     tcp     6346    - #gnutella
+#DROP    loc     net     udp     6347    - #gnutella
+#DROP    loc     net     tcp     6881:6890       - #bittorrent
+#DROP    loc     net     udp     6881:6890       - #bittorrent
+#DROP    loc     net     tcp     6902:6999       - #bittorrent
+#DROP    loc     net     udp     6902:6999       - #bittorrent
+#
 #########suporte
 ACCEPT  net	fw	tcp	22
 ACCEPT	loc	net	tcp	443
