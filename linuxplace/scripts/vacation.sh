@@ -1,5 +1,6 @@
 #!/bin/bash
 # Paulo Lucio <paulo@linuxplace.com.br>
+# $Id$
 
 if [ -z $1 ]; then
 	echo "Favor informar o nome do usuario a editar vacation"
