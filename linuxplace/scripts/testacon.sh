@@ -3,6 +3,7 @@
 # necessario colocar no crond
 # author: <fams@linuxplace.com.br>
 # Version: $Id$
+
 PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 INETIFACE=ppp0
@@ -41,4 +42,3 @@ if [ ! -z "$result" ];then
 	reconecta $OPERADORA
 fi
 #echo $PEER
-
