@@ -55,6 +55,7 @@ saida=$?
 if [ $saida -ne 0 ];then 
 	echo "Erro obtendo chaves" 
 	rm -f bundle.tar
+	/bin/rm -Rf $tmpdir
 	exit 1
 fi
 if [ -f ../bundle.tar ];then    
