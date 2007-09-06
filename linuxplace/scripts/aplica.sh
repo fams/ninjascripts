@@ -3,7 +3,7 @@
 # Script para aplicar configuracoes do gedai
 # Copyright 2004 by Fernando Augusto Medeiros Silva <fams at linuxplace dot com dot br>
 # Licensed under the GPL, version 2 or higher.
-# $Id:
+# $Id$
 exit
 . /etc/gedai/config
 . /usr/share/gconfig/funcs.sh
