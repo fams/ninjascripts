@@ -1,4 +1,5 @@
 #!/usr/bin/perl -w
+
 my $userdn="ou=People,dc=grupounitas,dc=net";
 my $groupdn="ou=Groups,dc=grupounitas,dc=net";
 my $homebase="/home/";
