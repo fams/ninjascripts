@@ -157,7 +157,10 @@ sub vrfysmbdir {
     my ($userid) = @_;
     local %ret = getuserattr( $userid , "homeDirectory" );
     if ( -d $ret{'homeDirectory'} ) {
-        
+        return 1;
+    }
+    else{
+        return 0;
     }
 }
 ###################################
