@@ -14,6 +14,8 @@ my $lxnCensus = 0;
 use strict;
 use POSIX qw(setsid);
 use Net::SSH qw(sshopen2);
+use Fcntl;
+use IO::Select;
 
 
 sub new {
@@ -99,51 +101,52 @@ sub exec{
 # 
 # Functions
 #
+# nonblock($socket) puts socket into nonblocking mode
+sub nonblock {
+    my $socket = shift;
+    my $flags;
+    
+    $flags = fcntl($socket, F_GETFL, 0)
+            or die "Can't get flags for socket: $!\n";
+    fcntl($socket, F_SETFL, $flags | O_NONBLOCK)
+            or die "Can't make socket nonblocking: $!\n";
+}
 
 sub waitfor{
-    my ($self,$pattern) = @_;
-    my $found;
+    my ($self,$pattern,$timeout) = @_;
+    my $found = 0;
+    my $buff = "";
+    my $read = "";
+    my @fhs;
+    if(!defined $timeout){
+        $timeout = $self->{TIMEOUT};
+    }
     local *READER = $self->{READER};
-    eval{
-        my $char; 
-        my $read;
-        local $SIG{ALRM} = sub { 
-                        $self->{MSG} = $read.$! ;
-                        $found=0;
-                        die "timeout\n";
-        };
-        alarm $self->{TIMEOUT};
-        while( $char = "".getc READER ){
-            alarm $self->{TIMEOUT};
-            $read .= $char;
-            #print $char,ord($char),"\n";
-            #print $read;
-            if( $read =~ /$pattern/ ){
-            #    print "FOUND\n";
-                $SIG{ALRM} = 'IGNORE';
-                $found = $read;
-                last;
-            } 
-        }
-    };
-#   print "fucked\n";
-    $SIG{ALRM} = 'IGNORE';
+
+    #Ok let's try nonblok I/O
+    nonblock( *READER );
+    my  $select = IO::Select->new( *READER );
+
+    while ( @fhs = $select->can_read($timeout})) {
+        foreach my $handle ( @fhs ){
+            my $bytes = sysread( $handle, $buff , 4096 );
+            if ( ! $bytes  ){  
+                return 0;
+            }
+            else{
+                $read .= $buff;
+                if( defined $pattern && $read =~ /$pattern/ ){
+                    return $read;
+                } 
+            }
+        }    
+    }
     return $found ;
 }
+
 sub ipcchomp{
     my $self = shift;
-    my $char;
-    *READER = $self->{READER};
-    eval{
-        local $SIG{ALRM} = sub { 
-             die"timeout\n";
-        };
-        alarm 2;
-        while($char = "".getc READER){
-            alarm 2;
-        }
-    };
-    $SIG{ALRM} = 'IGNORE';
+    $self->waitfor(undef,2);
 }
 sub DESTROY {
     my $self = shift;
