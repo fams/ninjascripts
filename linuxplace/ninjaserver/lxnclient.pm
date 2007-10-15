@@ -127,7 +127,7 @@ sub waitfor{
     nonblock( *READER );
     my  $select = IO::Select->new( *READER );
 
-    while ( @fhs = $select->can_read($timeout})) {
+    while ( @fhs = $select->can_read($timeout)) {
         foreach my $handle ( @fhs ){
             my $bytes = sysread( $handle, $buff , 4096 );
             if ( ! $bytes  ){  

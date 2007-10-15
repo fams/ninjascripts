@@ -12,6 +12,8 @@ use Sys::Syslog;
 use Config::IniFiles;
 use File::Path;
 use Net::LDAP;
+use Proc::UID qw(:funcs);
+use filetest 'access';
 
 
 #Inicializacao
@@ -110,6 +112,9 @@ sub mkftpdir {
                 $chown 
                 : 1;
     local %ret = getuserattr( $userid , "FTPdir" );    
+    if ( ! defined $ret{'FTPdir'} ){
+        Err("Nao encontrei FTPdir para o usuario");
+    }        
     return mksecdir( 'FTP' , $ret{'FTPdir'} , $userid , $chown );
 }
 
@@ -119,6 +124,9 @@ sub mksmbdir {
                 $chown 
                 : 1;
     local %ret = getuserattr( $userid , "homeDirectory" );    
+    if ( ! defined $ret{'homeDirectory'} ){
+        Err("Nao encontrei homeDirectory para o usuario");
+    }        
     return mksecdir( 'SMB', $ret{'homeDirectory'} , $userid , $chown );
 }
 
@@ -128,6 +136,9 @@ sub mkmaildir {
                 $chown 
                 : 1;
     local %ret = getuserattr( $userid , "mailMessageStore" );    
+    if ( ! defined $ret{'mailMessageStore'} ){
+        Err("Nao encontrei mailMessageStore para o usuario");
+    }
     mksecdir( 'MAIL', $ret{'mailMessageStore'} , $userid , $chown );
     local $maildir = $ret{'mailMessageStore'} ;
     eval { mkpath([ "$maildir/new" ,
@@ -156,21 +167,51 @@ sub mkmaildir {
 sub vrfysmbdir {
     my ($userid) = @_;
     local %ret = getuserattr( $userid , "homeDirectory" );
-    if ( -d $ret{'homeDirectory'} ) {
-        return 1;
+    if ( ! defined $ret{'homeDirectory'} ){
+        Err("Nao encontrei homeDirectory para o usuario");
     }
-    else{
-        return 0;
+    Info( "smbdir status is: ".vrfyuserdir($userid,$ret{"homeDirectory"}));
+}
+sub vrfyftpdir {
+    my ($userid) = @_;
+    local %ret = getuserattr( $userid , "FTPdir" );
+    if ( ! defined $ret{'FTPdir'} ){
+        Err("Nao encontrei FTPdir para o usuario");
     }
+    Info( "ftpdir status is: ".vrfyuserdir($userid,$ret{"FTPdir"}));
+}
+sub vrfymaildir {
+    my ($userid) = @_;
+    local %ret = getuserattr( $userid , "mailMessageStore" );
+    if ( ! defined $ret{'mailMessageStore'} ){
+        Err("Nao encontrei mailMessageStore para o usuario");
+    }
+    Info( "maildir status is: ".vrfyuserdir($userid,$ret{"mailMessageStore"}));
+}
+sub vrfyuserdir {
+    my ($userid, $dir ) = @_;
+    my $uid = getpwnam($userid);
+    my $ret = 0;
+    drop_uid_perm($uid);
+    if ( -e $dir ){ $ret+=1; }
+    if ( -d $dir ){ $ret+=2; }
+    if ( -r $dir ){ $ret+=4; }
+    if ( -w $dir ){ $ret+=6; }
+    restore_uid();
+    return $ret;
 }
 ###################################
 # Secure mkdir
 #
 sub mksecdir {
     my ( $pathtype , $path , $userid , $chown ) = @_ ; 
+    if ( ( ! defined $path) || ( ! defined $pathtype ) || ( ! defined $userid ) ) {
+        Err("Parâmetros insuficientes para mksecdir $pathtype:$path:$userid");
+    }
     chomp $path ;
     chomp $userid;
     chomp $chown;
+
     if ( $chown =~ /^[0-9]$/ ) {
         $chown = ( $chown ne 0 ) ? 1 : 0;
     }
@@ -178,7 +219,10 @@ sub mksecdir {
          Err("Lixo de entrada! logando $chown");
     }
     if ( $userid=~ /[^a-z0-9\.]/) {
-        Err("Lixo de entrada! guardando essa tentativa em log!!!\n");
+        Err("Lixo de entrada! guardando essa tentativa em log!!!");
+    }
+    if( $path =~ /^[^\/]/  ) {
+        Err("Lixo de entrada o caminho $path nao comeca com /");
     }
     #so pode entrar usuário bem definido
     if ( $path =~ m/^([A-Za-z0-9\.\-\/]+$)/ ){ 
@@ -188,7 +232,7 @@ sub mksecdir {
         Err("Lixo de entrada! logando $path");
     }
     if( $path =~ m/\.\./ ) { 
-        Err("Lixo de entrada! Tentativa de .. logando $path");
+        Err("Lixo de entrada! Tentativa de '..' logando $path");
     }
     my ( $basedir ) = $cfg->val( $pathtype , 'basedir' );
     $basedir =~ s/ //g;
