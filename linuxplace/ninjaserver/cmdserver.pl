@@ -196,7 +196,7 @@ sub vrfyuserdir {
     if ( -e $dir ){ $ret+=1; }
     if ( -d $dir ){ $ret+=2; }
     if ( -r $dir ){ $ret+=4; }
-    if ( -w $dir ){ $ret+=6; }
+    if ( -w $dir ){ $ret+=8; }
     restore_uid();
     return $ret;
 }
