@@ -24,3 +24,16 @@ se for local, favor colocar localhost
 o usuario execscript deve ser criado, o seu home apontado para /var/lib/cmdserver
 crie esse homedir e coloque a chave publica do servidor webmin (gerado via ssh)
 o root tem de ter direito de logar sem senha nesse usuário e o scrip tem de estar suid, 
+
+ex:
+  groupadd -g 999 execscript
+  useradd -g execscript -m -d /var/lib/cmdserver -s /usr/local/linuxplace/ninjaserver/cmdserver.pl execscript
+  "editar o arquivo de shells validos (/etc/shells)"
+  chmod u+s /usr/local/linuxplace/ninjaserver/cmdserver.pl
+  chmod 700 /var/lib/cmdserver
+  chown :execscript /usr/local/linuxplace/ninjaserver/cmdserver.pl
+  su - execscript -s /bin/bash -c 'ssh-keygen -t dsa'
+  mv /var/lib/cmdserver/.ssh/id_dsa.pub /var/lib/cmdserver/.ssh/authorized_keys2
+  "Copiar o arquivo /var/lib/cmdserver/.ssh/id_dsa para o servidor que contem o webmin como /root/.ssh/id_dsa"
+  rm -f /var/lib/cmdserver/.ssh/id_dsa
+
