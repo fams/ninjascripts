@@ -135,8 +135,8 @@ sub waitfor{
             }
             else{
                 $read .= $buff;
-                if( defined $pattern && $read =~ /$pattern/ ){
-                    return $read;
+                if( defined $pattern && $read =~ /($pattern)/ ){
+                    return $1;
                 } 
             }
         }    
