@@ -263,7 +263,7 @@ sub mksecdir {
                 Err("Lixo de entrada! logando. $uid");
             }
             unless( chown $uid , $gid ,  $path ) {
-                Err("Erro ao definir dono de $path: $@");
+                Err("Erro ao definir dono de $path: $uid, $gid $@");
             }
         }# if chown 1
         Info("criado $pathtype userid:$userid path:$path chown:$chown");

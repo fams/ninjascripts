@@ -16,7 +16,7 @@ use lxnclient;
 $nomade = new lxnclient;
 
 if ($nomade->connect("execscript","localhost")){
-    $nomade->exec("mksmbdir plucio 1");
+    $nomade->exec("mksmbdir fams 1");
     print $nomade->{MSG};
 }
 else{
