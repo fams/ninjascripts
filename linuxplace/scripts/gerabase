@@ -3,20 +3,21 @@ LXBASE=/usr/local/linuxplace
 . $LXBASE/config/ldap
 . $LXBASE/config/lxn
 . $LXBASE/config/horde
+. $LXBASE/config/samba
 
 /etc/init.d/slapd stop
 killall slapd
 #config
 cat $LXBASE/stanza/ldap/slapd.conf |sed "s/%SUFFIX%/$SUFFIX/" > $LXBASE/temp/slapd.conf
 cat $LXBASE/stanza/ldap/init.ldif |sed "s/%SUFFIX%/$SUFFIX/;s/%DOMAIN%/$DOMAIN/;s/%EMPRESA%/$EMPRESA/;s/%MAILDOMAIN%/$MAILDOMAIN/" > $LXBASE/temp/init.ldif
-cp $LXBASE/temp/slapd.conf /etc/ldap/slapd.conf
-cp $LXBASE/stanza/ldap/slapd.access.conf /etc/ldap/
-cp $LXBASE/stanza/ldap/schema/* /etc/ldap/schema/
+#cp $LXBASE/temp/slapd.conf /etc/ldap/slapd.conf
+#cp $LXBASE/stanza/ldap/slapd.access.conf /etc/ldap/
+#cp $LXBASE/stanza/ldap/schema/* /etc/ldap/schema/
 
 #preparando a base
 mv /var/lib/ldap/DB_CONFIG $LXBASE/temp/
-rm /var/lib/ldap/* 
-mv $LXBASE/temp/DB_CONFIG /var/lib/ldap/
+#rm /var/lib/ldap/* 
+#mv $LXBASE/temp/DB_CONFIG /var/lib/ldap/
 slapadd <$LXBASE/temp/init.ldif
 /etc/init.d/slapd start
 

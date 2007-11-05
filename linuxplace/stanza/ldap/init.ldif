@@ -40,7 +40,6 @@ objectClass: organizationalUnit
 dn: ou=postfix,ou=system,%SUFFIX%
 ou: postfix
 objectClass: organizationalUnit
-structuralObjectClass: organizationalUnit
 
 dn: dc=domains,ou=postfix,ou=System,%SUFFIX%
 associatedDomain: %MAILDOMAIN%
@@ -51,10 +50,17 @@ objectClass: domainRelatedObject
 dn: ou=mailinglists,ou=postfix,ou=System,%SUFFIX%
 ou: mailinglists
 objectClass: organizationalUnit
-structuralObjectClass: organizationalUnit
 
 dn: cn=users,ou=Groups,%SUFFIX%
 objectClass: posixGroup
 cn: users
 gidNumber: 100
 description: Default Group
+
+dn: sambaDomainName=%SAMBADOMAINNAME%,%SUFFIX%
+sambaSID: %SAMBASID%
+gidNumber: %MINGUIDNUMBER%
+objectClass: sambaDomain
+objectClass: sambaUnixIdPool
+sambaDomainName: %SAMBADOMAINNAME%
+uidNumber: %MINUIDNUMBER%

@@ -13,10 +13,10 @@ PFHOSTNAME = socket.getfqdn()
 LXBASE="/usr/local/linuxplace"
 
 # Configuracoes a serem obtidas do Config
-PFMYNETWORK="192.168.1.0/24"
+PFMYNETWORK="10.0.0.0/8"
 LDAPHOST="127.0.0.1"
-LDAPBASEDN="dc=veterinaria,dc=intra"
-LDAPBINDPW="teste"
+LDAPBASEDN="dc=bartofil,dc=intra"
+LDAPBINDPW="nFBbAN0R"
 SMTPRELAY="N"
 PFRELAYHOST="smtp.bhz.terra.com.br"
 PFRELAYUSER="veterinaria"
@@ -69,7 +69,7 @@ for line in stanza:
 fp.close()
 
 #Copia master.cf, ainda temos que mexer muito nesse script
-shutil.copyfile( LXBASE + "/stanza/postfix/master.cf","/etc/postfix/master.cf")
+#shutil.copyfile( LXBASE + "/stanza/postfix/master.cf","/etc/postfix/master.cf")
 
-os.system("/usr/bin/maildirmake /etc/skel/Maildir")
+#os.system("/usr/bin/maildirmake /etc/skel/Maildir")
 sys.exit(0)
