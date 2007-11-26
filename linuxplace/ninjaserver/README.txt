@@ -44,30 +44,31 @@ ex:
 Copiar o arquivo /var/lib/cmdserver/.ssh/id_dsa para o servidor que contem o webmin como /root/.ssh/id_dsa"
   #rm -f /var/lib/cmdserver/.ssh/id_dsa
   #
-Configure o cmdserver copiando o cmdserver.conf para o /usr/local/etc/
+Configure o cmdserver copiando o cmdserver.ini para o /usr/local/etc/
+ 
 os parametros dele sao:
 
 [MAIN]
 logfacility=local0
 ;uri para acesso ao ldap 
 ;ex: ldap://localhost
-ldapuri=ldap://192.168.0.2
+ldapuri=ldap://ldapserver.mydomain
 ;manager da base
-ldapuserdn=cn=manager,dc=linuxplace,dc=intra
+ldapuserdn=cn=manager,dc=mydomain,dc=intra
 ;password do manager
-ldappasswd=teste
+ldappasswd=changeme
 ;sufixo da base
-ldapsuffix=dc=linuxplace,dc=intra
+ldapsuffix=dc=mydomain,dc=intra
 
 [SMB]
 ;diretorio base dos homedir
-basedir=/home/samba/usuarios/
+basedir=/path/to/smbusers/
 
 [FTP]
 ;diretorio base dos ftp
-basedir=/home/usuarios/
+basedir=/path/to/ftpusers/
 
 [MAIL]
 diretorio base dos emails
-basedir=/home/usuarios/
+basedir=/path/to/mailusers/
 
