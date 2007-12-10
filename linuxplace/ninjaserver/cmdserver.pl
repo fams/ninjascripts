@@ -197,7 +197,7 @@ sub vrfyuserdir {
     if ( -d $dir ){ $ret+=2; }
     if ( -r $dir ){ $ret+=4; }
     if ( -w $dir ){ $ret+=8; }
-    $>=$restore
+    $>=$restore;
     return $ret;
 }
 ###################################
