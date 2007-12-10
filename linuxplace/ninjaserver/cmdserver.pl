@@ -12,7 +12,6 @@ use Sys::Syslog;
 use Config::IniFiles;
 use File::Path;
 use Net::LDAP;
-use Proc::UID qw(:funcs);
 use filetest 'access';
 
 
@@ -192,12 +191,13 @@ sub vrfyuserdir {
     my ($userid, $dir ) = @_;
     my $uid = getpwnam($userid);
     my $ret = 0;
-    drop_uid_perm($uid);
+    my $restore	= $>;
+    $>=$uid;
     if ( -e $dir ){ $ret+=1; }
     if ( -d $dir ){ $ret+=2; }
     if ( -r $dir ){ $ret+=4; }
     if ( -w $dir ){ $ret+=8; }
-    restore_uid();
+    $>=$restore
     return $ret;
 }
 ###################################
