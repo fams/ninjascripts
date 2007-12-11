@@ -7,7 +7,6 @@ para funcionar o cmdserver precisa dos seguintes modulos perl
 
 Config::IniFiles    -> libconfig-inifiles-perl
 Net::LDAP           -> libnet-ldap-perl
-Proc::UID           -> CPAN
 
 
 Do lado do idx os seguintes além dos já conhecidos
