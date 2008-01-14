@@ -644,7 +644,7 @@ debugger_command =
 #default_destination_recipient_limit = 20
 myhostname = %HOSTNAME%
 mynetworks = 127.0.0.0/8, %MYNETWORK%
-smtpd_banner = *********************************************
+smtpd_banner = $myhostname ESMTP
 alias_maps = hash:/etc/aliases
 #smtpd_reject_unlisted_sender = yes
 smtpd_recipient_limit = 20
@@ -717,8 +717,7 @@ matchlogin_version = 3
 matchlogin_bind_dn = %LDAPBINDDN%
 matchlogin_bind_pw = %LDAPBINDPW%
 matchlogin_search_base = ou=People,%LDAPBASEDN%
-matchlogin_query_filter = (&(objectClass=qmailUser)(|(mail=%s)(mailAlternateAddr
-ess=%s)))
+matchlogin_query_filter = (&(objectClass=qmailUser)(|(mail=%s)(mailAlternateAddress=%s)))
 matchlogin_result_attribute = uid
 ###END-LDAP###
 
