@@ -149,7 +149,7 @@ sub mkmaildir {
     if ($@) {
           Err( "MKDIR: Erro criando maildir $maildir" );
     }
-    if ( $userid =~ /^([a-z0-9\.]+)$/) {
+    if ( $userid =~ /^([a-z0-9\.\-]+)$/) {
         $userid = $1;
     }
     else{
@@ -218,7 +218,7 @@ sub mksecdir {
     else{
          Err("Lixo de entrada! logando $chown");
     }
-    if ( $userid=~ /[^a-z0-9\.]/) {
+    if ( $userid=~ /[^a-z0-9\.\-]/) {
         Err("Lixo de entrada! guardando essa tentativa em log!!!");
     }
     if( $path =~ /^[^\/]/  ) {
