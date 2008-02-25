@@ -1,0 +1,195 @@
+#!/usr/bin/env perl
+#
+#Monioracao de links epa
+#Fernando Augusto Medeiros Silva
+#fams@linuxplace.com.br
+#Paulo Lucio de Matos Campos Jr
+#paulo@linuxplace.com.br
+# Baseado script monitorar vpn
+# $Id: vfailover,v 1.3 2007/03/29 01:36:53 fams Exp $
+
+use POSIX qw(setsid);
+use strict;
+my $cmd = "/usr/local/sbin/rota.sh";
+my $custommsg;
+%main::time;
+%main::state;
+%main::host;
+%main::name;
+$main::timelimit="1";
+$main::receipt="ti\@grupounitas.com";
+$main::from="fw\@grupounitas.com";
+$main::oldstate="primary0:secondary0";
+open(LOG,">>/var/log/checklink");
+
+#deamonize
+chdir '/';
+umask 0;
+open (STDIN,'/dev/null') or die ('Nao foi possivel abrir /dev/null $!');
+open (STERR,'>/dev/null') or die ('Nao foi possivel abrir /dev/null $!');
+open (STOUT,'>/dev/null') or die ('Nao foi possivel abrir /dev/null $!');
+
+defined(my $pid = fork) or die ('Cannot fork');
+exit if $pid;
+setsid or die ('Nao foi possivel iniciar nova sessao');
+
+
+#iniciando estado dos links
+$main::time{'primary'}="0";
+$main::time{'secondary'}="0";
+$main::state{'primary'}="0";
+$main::state{'secondary'}="0";
+$main::host{'primary'}="200.244.164.138";
+$main::host{'secondary'}="200.217.72.205";
+$main::name{'primary'}="embratel";
+$main::name{'secondary'}="velox";
+
+# Linha provisoria
+checkroute();
+
+#main loop
+for (my $i=0;$i<$main::timelimit;$i++){
+	checkstate('secondary','primary');
+	sleep 60;
+}
+while(1){
+	checkstate('secondary','primary');
+    if("primary$main::state{'primary'}:secondary$main::state{'secondary'}" ne $main::oldstate){
+        procevent($main::oldstate."->primary$main::state{'primary'}:secondary$main::state{'secondary'}");
+	$main::oldstate="primary$main::state{'primary'}:secondary$main::state{'secondary'}";
+    }
+    sleep 10;
+}
+####################SUBS###############3
+sub procevent{
+    my ($event) = @_;
+    SWITCH: {
+        #primary0:secondary0
+        if ($event =~ /^primary0:secondary0->primary0:secondary1/) {
+            if(checkroute() ne "secondary"){
+                unless (setroute("secondary")){ $event="Erro em $event"};
+		$custommsg = "CONEXAO ".$main::name{'secondary'}." REESTABELECIDA\nALTERANDO ROTA PARA ".$main::name{'secondary'}."";
+	        }
+        last SWITCH;};#00->01
+        if ($event =~ /^primary0:secondary0->primary1:secondary0/) {
+            if(checkroute() ne "primary"){
+                unless (setroute("primary")){ $event="Erro em $event"};
+		$custommsg = "CONEXAO LINK ".$main::name{'primary'}." REESTABELECIDA\nALTERANDO ROTA PARA LINK ".$main::name{'primary'};
+	        }
+        last SWITCH; };#00->10
+        if ($event =~ /^primary0:secondary0->primary1:secondary1/)  { 
+#            if(checkroute() ne "primary"){
+                unless (setroute("both")){ $event="Erro em $event"};
+		$custommsg = "TODAS CONEXOES REESTABELECIDAS\nALTERANDO ROTA PARA BOTH";
+#            }
+        last SWITCH; };#00->11
+        #primary0:secondary1 
+        if ($event =~ /^primary0:secondary1->primary0:secondary0/) {
+	last SWITCH; };#01->00
+        if (/^primary0:secondary1->primary1:secondary0/)  { 
+            if(checkroute() ne "primary"){
+                unless (setroute("primary")){ $event="Erro em $event"};
+		$custommsg = "A CONEXAO LINK ".$main::name{'secondary'}." ESTA INATIVA\nMAS A CONEXAO ".$main::name{'primary'}." FOI REESTABELECIDA\n ALTERANDO ROTA PARA ".$main::name{'primary'}."";
+	        }
+        last SWITCH; };#01->10
+#            if($main::time{'primary'}<$main::timelimit){
+#                $main::state{'primary'}=0;
+#		print LOG joing(":","primary tem",$main::time{'primary'}," \n" );
+#	     }else{
+#            }   
+        if ($event =~ /^primary0:secondary1->primary1:secondary1/)   {
+                unless (setroute("both")){ $event="Erro em $event"};
+		$custommsg = "CONEXAO ".$main::name{'primary'}." REESTABELECIDA\nALTERANDO ROTA PADRAO PARA BOTH";
+        last SWITCH; };#01->11
+        #primary1:secondary0
+        if ($event =~ /^primary1:secondary0->primary0:secondary0/){ 
+        last SWITCH; };#10->00
+        if ($event =~ /^primary1:secondary0->primary0:secondary1/) { 
+            if(checkroute() ne "secondary"){
+                unless (setroute("secondary")){ $event="Erro em $event"};
+		$custommsg = "CONEXAO LINK ".$main::name{'secondary'}." REESTABELECIDA\nCONEXAO LINK ".$main::name{'primary'}." INATIVA\rALTERANDO ROTA PARA LINK ".$main::name{'secondary'}."";
+            }
+        last SWITCH; };#10->01
+        if ($event =~ /^primary1:secondary0->primary1:secondary1/)  { 
+#               if(checkroute() ne "primary"){
+                    unless (setroute("both")){ $event="Erro em $event"};
+	    $custommsg = "CONEXAO LINK ".$main::name{'secondary'}." REESTABELECIDA\nALTERANDO ROTA BOTH";
+#              }
+        last SWITCH; };#10->11
+        #primary1:secondary1
+        if ($event =~ /^primary1:secondary1->primary0:secondary0/) { 
+	last SWITCH; };#11->00
+        if ($event =~ /^primary1:secondary1->primary0:secondary1/)  { 
+            if(checkroute() ne "secondary"){
+                unless (setroute("secondary")){ $event="Erro em $event"};
+		$custommsg = "CONEXAO ".$main::name{'secondary'}." INATIVA\nMANTENDO ROTA PADRAO LINK ".$main::name{'primary'}."";
+            }
+        last SWITCH; };#11->01
+        if ($event =~ /^primary1:secondary1->primary1:secondary0/)  { 
+            if(checkroute() ne "primary"){
+		unless (setroute("primary")){ $event="Erro em $event"};
+		$custommsg = "CONEXAO ".$main::name{'secondary'}." INATIVA\nCONEXAO LINK ".$main::name{'primary'}." ATIVA\nMANTENDO ROTA PARA ".$main::name{'primary'}."";
+            }
+        last SWITCH; };#11->10
+    }
+    #my $date = gmtime();
+    my $date = localtime();
+    print LOG join(' ',$date,":", $event,"\n") ;
+    notify("$date\nMudanca de estado do link.\n $event\n $custommsg\n");
+}
+sub setroute{
+    my ($command) = @_;
+    my $parameter = "set" . $command;
+    my $tmp;
+    open( CMD, "-|", $cmd, $parameter );
+    chomp($tmp = <CMD>);
+    chomp($tmp);
+    close CMD;
+    if ( $tmp ne $command ) {
+    	return undef;
+    }
+    return 1;
+}
+sub checkroute{
+    my $tmp;
+    $tmp = `$cmd show`;
+    chomp($tmp);
+    if ( "$tmp" eq "panic"){
+    	setroute("secondary");
+    }
+    return "$tmp";
+}
+
+sub checkstate{
+    my @links=@_;
+    my $link;
+#    while($link = @links){
+     foreach $link (@links){
+        if(pinghost($main::host{$link},7)){
+            $main::time{$link}++;
+            $main::state{$link}=1;  
+        }else{
+            $main::time{$link}=0;
+            $main::state{$link}=0;  
+        }
+    }
+}
+sub notify{
+    my ($msg)=@_;
+
+open(SENDMAIL,"|/usr/sbin/sendmail -t -oi ");
+	my $mail;
+	$mail .= <<EOF;
+From:$main::from
+To:$main::receipt
+Subject: AVISO: Notificacao de Mudanca de link"
+            
+$msg
+EOF
+    print  SENDMAIL $mail;
+    close(SENDMAIL);
+}
+sub pinghost{
+    my($host,$timeout)=@_;
+    return (system("ping -w $timeout -c 2 $host >/dev/null")==0);
+    }

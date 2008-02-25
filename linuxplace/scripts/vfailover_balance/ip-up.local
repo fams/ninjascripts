@@ -1,0 +1,12 @@
+#!/bin/bash
+PPP_IFACE=$1
+PPP_LOCAL=$4
+PPP_REMOTE=$5
+if [ "$PPP_IFACE" == "ppp0" ]; then
+        /sbin/ip route flush table velox
+        /sbin/ip route add $PPP_LOCAL dev $PPP_IFACE src $PPP_LOCAL table velox
+        /sbin/ip route add default via $PPP_REMOTE table velox
+        /sbin/ip rule add from $PPP_LOCAL table velox
+        /sbin/ip rule add to $PPP_REMOTE table velox
+        /sbin/ip route flush cache
+fi
