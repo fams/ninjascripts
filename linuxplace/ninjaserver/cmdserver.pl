@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w -T
+#!/usr/bin/suidperl -w -T
 #
 #Esse software tem como objetivo executar as chamadas do gerenciador ninja
 #
@@ -155,12 +155,11 @@ sub mkmaildir {
     else{
         Err("Lixo de entrada! guardando essa tentativa em log!!!\n");
     }
-    system( "/bin/chown $userid:100 $maildir/new" ) == 0  
-        or Err( "Erro chown $userid:100 $maildir/new:" );
-    system( "/bin/chown $userid:100 $maildir/cur" ) == 0
-        or Err( "Erro chown $userid:100 $maildir/cur:" );
-    system( "/bin/chown $userid:100 $maildir/tmp" ) == 0
-        or Err( "Erro chown $userid:100 $maildir/tmp:" );
+    $maildir=~/(.*)/;
+    $maildir=$1;
+    $ENV{"PATH"} = "";
+    system( "/bin/chown -R $userid:100 $maildir" ) == 0  
+        or Err( "Erro chown $userid:100 $maildir" );
     return 1;
 }
 sub vrfysmbdir {
@@ -262,9 +261,11 @@ sub mksecdir {
             else{
                 Err("Lixo de entrada! logando. $uid");
             }
-            unless( chown $uid , $gid ,  $path ) {
-                Err("Erro ao definir dono de $path: $uid , $gid $@");
-            }
+	    $path=~/(.*)/;
+	    $path=$1;
+    	    $ENV{"PATH"} = "";
+            system( "/bin/chown -R $uid:$gid $path" ) == 0  
+                or Err( "Erro chown $uid:$gid $path" );
         }# if chown 1
         Info("criado $pathtype userid:$userid path:$path chown:$chown");
     }
