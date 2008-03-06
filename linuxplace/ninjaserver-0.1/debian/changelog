@@ -1,3 +1,10 @@
+ninjaserver (0.1-10) unstable; urgency=low
+
+  *Mudanca no uid do usuario de 999 para 990 para nao conflitar com o usuario
+   nobody do smbldap-populate
+
+ -- Fernando Augusto Medeiros Silva <fams@linuxplace.com.br>  Thu,  6 Mar 2008 14:57:51 -0300
+
 ninjaserver (0.1-9) unstable; urgency=low
 
   * Adicionada checagem de existência de chave DSA (em caso de upgrade)
