@@ -1,4 +1,5 @@
 ###########
+# version $Id$
 
 Instalar o perl suid
 perl-suid
@@ -27,7 +28,7 @@ o root tem de ter direito de logar sem senha nesse usuário e o scrip tem de est
 
 ex:
 #--corte daqui
-  groupadd -g 999 execscript
+  groupadd -g 990 execscript
   useradd -g execscript -m -d /var/lib/cmdserver -s /usr/local/linuxplace/ninjaserver/cmdserver.pl execscript
   echo "/usr/local/linuxplace/ninjaserver/cmdserver.pl" >> /etc/shells 
   #editar o arquivo de shells validos (/etc/shells)"
