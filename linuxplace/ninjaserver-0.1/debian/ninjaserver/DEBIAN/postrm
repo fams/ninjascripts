@@ -1,0 +1,21 @@
+#!/bin/sh
+# postrm script for ninjaserver
+#
+# see: dh_installdeb(1)
+
+set -e
+
+#colocar teste pra checar se o usuario e o grupo existem
+getent passwd execscript >/dev/null 2>&1 && /usr/sbin/userdel -r execscript
+getent group execscript >/dev/null 2>&1 && /usr/sbin/groupdel execscript
+
+if [ -x /usr/sbin/remove-shell ]; then
+    /usr/sbin/remove-shell /usr/local/bin/cmdserver.pl
+fi
+
+
+
+
+exit 0
+
+

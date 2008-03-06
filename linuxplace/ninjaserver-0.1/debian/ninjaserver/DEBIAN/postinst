@@ -1,0 +1,34 @@
+#!/bin/sh
+# postinst script for ninjaserver
+#
+# see: dh_installdeb(1)
+
+set -e
+if [ "$1" = configure ]; then
+	if [ -x /usr/sbin/add-shell ]; then
+	    	/usr/sbin/add-shell /usr/local/bin/cmdserver.pl
+	fi
+
+	getent group execscript >/dev/null 2>&1 || /usr/sbin/groupadd -g 999 execscript
+	getent passwd execscript >/dev/null 2>&1 || /usr/sbin/useradd -u 999 -g execscript -m -d /var/lib/cmdserver -s /usr/local/bin/cmdserver.pl execscript
+
+
+	/bin/chown :execscript /usr/local/bin/cmdserver.pl
+	/bin/chmod 740 /var/lib/cmdserver
+	/bin/chmod u+s /usr/local/bin/cmdserver.pl
+	cat /usr/share/doc/ninjaserver/README.txt
+	echo "Pressione <ENTER> para continuar"
+	read
+	#checa se as chaves existem, caso contrário gera um par
+	if [ ! -f /var/lib/cmdserver/.ssh/authorized_keys2 ]; then
+		echo "Gerando par de chaves DSA em /var/lib/cmdserver/.ssh"
+		/bin/su - execscript -s /bin/bash -c 'ssh-keygen -q -N "" -t dsa -f "/var/lib/cmdserver/.ssh/id_dsa"'
+		/bin/mv /var/lib/cmdserver/.ssh/id_dsa.pub /var/lib/cmdserver/.ssh/authorized_keys2
+	fi
+fi
+
+
+
+exit 0
+
+
