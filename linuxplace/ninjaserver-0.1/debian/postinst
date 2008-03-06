@@ -9,8 +9,8 @@ if [ "$1" = configure ]; then
 	    	/usr/sbin/add-shell /usr/local/bin/cmdserver.pl
 	fi
 
-	getent group execscript >/dev/null 2>&1 || /usr/sbin/groupadd -g 999 execscript
-	getent passwd execscript >/dev/null 2>&1 || /usr/sbin/useradd -u 999 -g execscript -m -d /var/lib/cmdserver -s /usr/local/bin/cmdserver.pl execscript
+	getent group execscript >/dev/null 2>&1 || /usr/sbin/groupadd -g 990 execscript
+	getent passwd execscript >/dev/null 2>&1 || /usr/sbin/useradd -u 990 -g execscript -m -d /var/lib/cmdserver -s /usr/local/bin/cmdserver.pl execscript
 
 
 	/bin/chown :execscript /usr/local/bin/cmdserver.pl
