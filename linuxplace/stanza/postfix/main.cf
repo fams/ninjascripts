@@ -32,13 +32,13 @@
 # The command_directory parameter specifies the location of all
 # postXXX commands.
 #
-command_directory = /usr/sbin
+#command_directory = /usr/sbin
 
 # The daemon_directory parameter specifies the location of all Postfix
 # daemon programs (i.e. programs listed in the master.cf file). This
 # directory must be owned by root.
 #
-daemon_directory = /usr/lib/postfix
+#daemon_directory = /usr/lib/postfix
 
 # QUEUE AND PROCESS OWNERSHIP
 #
@@ -586,9 +586,9 @@ unknown_local_recipient_reject_code = 550
 # the process marches on. If you use an X-based debugger, be sure to
 # set up your XAUTHORITY environment variable before starting Postfix.
 #
-debugger_command =
-	 PATH=/bin:/usr/bin:/usr/local/bin:/usr/X11R6/bin
-	 xxgdb $daemon_directory/$process_name $process_id & sleep 5
+#debugger_command =
+#	 PATH=/bin:/usr/bin:/usr/local/bin:/usr/X11R6/bin
+#	 xxgdb $daemon_directory/$process_name $process_id & sleep 5
 
 # If you don't have X installed on the Postfix machine, try:
 # debugger_command =
@@ -637,6 +637,16 @@ debugger_command =
 # readme_directory: The location of the Postfix README files.
 #
 #readme_directory =
+biff = no
+
+# appending .domain is the MUA's job.
+append_dot_mydomain = no
+
+# Uncomment the next line to generate "delayed mail" warnings
+#delay_warning_time = 4h
+
+readme_directory = no
+
 
 
 #[ CUSTOMIZED ]
@@ -650,22 +660,38 @@ alias_maps = hash:/etc/aliases
 smtpd_recipient_limit = 20
 smtp_destination_recipient_limit = 20
 maximal_queue_lifetime = 2d
+#Deliver
 mailbox_command = /usr/bin/maildrop -d $USER
-content_filter = smtp-amavis:[127.0.0.1]:10024
 home_mailbox = Maildir/
+#Filter
+content_filter = smtp-amavis:[127.0.0.1]:10024
+#Limite de mensagem
 message_size_limit = 5120000
 #message_size_limit = 0
-#smtpd_sasl_auth_enable = yes
-#smtpd_sasl_local_domain =
-#smtpd_sasl_security_options = noanonymous
-#broken_sasl_auth_clients = yes
+smtpd_sasl_auth_enable = yes
+smtpd_sasl_local_domain =
+smtpd_sasl_security_options = noanonymous
+broken_sasl_auth_clients = yes
+# So envia email se ele estiver amarrado no ldap
 #smtpd_sender_login_maps = ldap:matchlogin
-#smtpd_recipient_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination
-#Linha com autenticacao (FULL) checagem, etc ...
+
+#Local Only, Dominios que nao aceitam email de fora e seus usuarios nao enviam para fora deles
 #smtpd_restriction_classes = local_only
 #local_only = check_recipient_access hash:/etc/postfix/local_domains, reject
-#smtpd_recipient_restrictions = permit_mynetworks, reject_sender_login_mismatch, check_sender_access regexp:/etc/postfix/restricted_senders, permit_sasl_authenticated, reject_unauth_destination, reject_maps_rbl
-#smtpd_recipient_restrictions = reject_sender_login_mismatch, permit_sasl_authenticated, reject_unauth_destination, reject_maps_rbl
+
+# Linha com autenticacao (FULL) checagem, etc ...
+# permit_mynetworks : Aceita dos ips do mynetworks
+# reject_sender_login_mismatch: se nao bater o login com o email rejeita, depende do  smtpd_sender_login_maps
+# check_sender_access regexp:/etc/postfix/restricted_senders: controla o envio de uma base hash, quem esta aqui nao manda
+# permit_sasl_authenticated: Permite aos atenticados enviar
+# reject_unauth_destination: se nao estiver autenticado nao faz relay
+# check_client_access hash:/etc/postfix/rbl-whitelist: Ips que podem enviar mesmo estando na blacklist (passa tudo, use por sua propria conta e risco
+# reject_rbl_client xxxx: Black Lists
+# reject_unknown_sender_domain: Rejeita se o dominio de envio nao existir
+# reject_unknown_client: Se nao tiver reverso nao envia
+# 
+
+#smtpd_recipient_restrictions = permit_mynetworks, reject_sender_login_mismatch, check_sender_access regexp:/etc/postfix/restricted_senders, permit_sasl_authenticated, reject_unauth_destination, check_client_access hash:/etc/postfix/rbl-whitelist, reject_rbl_client relays.ordb.org, reject_rbl_client opm.blitzed.org, reject_rbl_client list.dsbl.org, reject_rbl_client sbl.spamhaus.org, reject_rbl_client blackholes.easynet.nl, reject_rbl_client cbl.abuseat.org, reject_rbl_client blackholes.mail-abuse.org, reject_unknown_sender_domain
 
 
 smtpd_recipient_restrictions = permit_mynetworks, reject_unauth_destination,check_client_access hash:/etc/postfix/rbl-whitelist, reject_rbl_client relays.ordb.org, reject_rbl_client opm.blitzed.org, reject_rbl_client list.dsbl.org, reject_rbl_client sbl.spamhaus.org, reject_rbl_client blackholes.easynet.nl, reject_rbl_client cbl.abuseat.org, reject_rbl_client blackholes.mail-abuse.org, reject_unknown_sender_domain
