@@ -202,7 +202,7 @@ sub vrfyuserdir {
 }
 sub removedir {
     my ($userid,$dir,$archive)=@_;
-    if($dir ~! /(mailMessageStore|FTPdir|homeDirectory)/){
+    if($dir !~ /(mailMessageStore|FTPdir|homeDirectory)/){
         Err("Diretorio $dir e invalido");
     }
     local %userattr = getuserattr( $userid , $dir );
