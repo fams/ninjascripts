@@ -16,10 +16,7 @@ if [ "$1" = configure ]; then
 	/bin/chown :execscript /usr/local/bin/cmdserver.pl
 	/bin/chmod 740 /var/lib/cmdserver
 	/bin/chmod u+s /usr/local/bin/cmdserver.pl
-	cat /usr/share/doc/ninjaserver/README.txt
-	echo "Pressione <ENTER> para continuar"
-	read
-	#checa se as chaves existem, caso contrário gera um par
+	checa se as chaves existem, caso contrário gera um par
 	if [ ! -f /var/lib/cmdserver/.ssh/authorized_keys2 ]; then
 		echo "Gerando par de chaves DSA em /var/lib/cmdserver/.ssh"
 		/bin/su - execscript -s /bin/bash -c 'ssh-keygen -q -N "" -t dsa -f "/var/lib/cmdserver/.ssh/id_dsa"'
