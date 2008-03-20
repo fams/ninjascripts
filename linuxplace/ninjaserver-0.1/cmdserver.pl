@@ -48,9 +48,10 @@ my %commands = (
         "vrfysmbdir"    => \&vfysmbdir,
         "vrfymaildir"   => \&vrfymaildir,
         "vrfyftpdir"    => \&vrfyftpdir,
-        "version"    => \&version,
-        "curdate"    => \&curdate,
-        "help"    => \&help,
+        "removedir"     => \&removedir,
+        "version"       => \&version,
+        "curdate"       => \&curdate,
+        "help"          => \&help,
         );
 
 my %cmdhelp = (
@@ -199,6 +200,25 @@ sub vrfyuserdir {
     $>=$restore;
     return $ret;
 }
+sub removedir {
+    my ($userid,$dir,$archive)=@_;
+    if($dir ~! /(mailMessageStore|FTPdir|homeDirectory)/){
+        Err("Diretorio $dir e invalido");
+    }
+    local %userattr = getuserattr( $userid , $dir );
+    if ( ! defined $userattr{$dir} ){
+        Err("Nao encontrei $dir para o usuario");
+    }
+    if($archive>0){
+        $basedir=$cfg->val( 'MAIN' , 'userdirsave' );
+        $cmd="/usr/bin/tar -cvzf $basedir/$dir-$userid.tar.gz ".$userattr{$dir};
+        system( $cmd ) == 0  
+            or Err( "Erro compactando $userattr{$dir} em basedir/$dir-$userid.tar.gz" );
+   }
+}
+
+        
+
 ###################################
 # Secure mkdir
 #

@@ -1,3 +1,9 @@
+ninjaserver (0.1-13) unstable; urgency=low
+
+  * Erro no postinst 
+
+ -- Fernando Augusto Medeiros Silva <fams@linuxplace.com.br>  Thu, 20 Mar 2008 10:42:29 -0300
+
 ninjaserver (0.1-12) unstable; urgency=low
 
   * Retirado o read e o texto de explicacao do pacote, atrapalha a instalacao
