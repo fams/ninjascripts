@@ -158,9 +158,16 @@ sub mkmaildir {
     }
     $maildir=~/(.*)/;
     $maildir=$1;
+    my ($login,$pass,$uid,$gid) = getpwnam($userid)
+        or Err("$userid not in passwd file");
+    if($gid =~ m/^([0-9]+)$/){
+        $gid=$1;
+    }else{
+        Err("Lixo de entrada! logando. para user:$userid recebi gid:$gid");
+    }
     $ENV{"PATH"} = "";
-    system( "/bin/chown -R $userid:100 $maildir" ) == 0  
-        or Err( "Erro chown $userid:100 $maildir" );
+    system( "/bin/chown -R $userid:$gid $maildir" ) == 0  
+        or Err( "Erro chown $userid:$gid $maildir" );
     return 1;
 }
 sub vrfysmbdir {

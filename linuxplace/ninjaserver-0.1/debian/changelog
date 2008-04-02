@@ -1,3 +1,10 @@
+ninjaserver (0.1-14) unstable; urgency=low
+
+  * O grupo owner da pasta Maildir agora é definido pelo grupo do usuário e
+    nao fixo em 100
+
+ -- Fernando Augusto Medeiros Silva <fams@linuxplace.com.br>  Wed, 02 Apr 2008 17:10:08 -0300
+
 ninjaserver (0.1-13) unstable; urgency=low
 
   * Erro no postinst 
