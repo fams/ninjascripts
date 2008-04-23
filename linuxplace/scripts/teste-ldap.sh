@@ -2,6 +2,7 @@
 #
 # Script para teste/recovery da base LDAP
 #
+#Este comentario foi adicionado para mostrar ao Sergio
 
 umask 077
 BACKHOME="/var/backups"
