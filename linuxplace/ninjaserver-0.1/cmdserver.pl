@@ -126,6 +126,7 @@ sub removequotafile {
        Err("Nao encontrei mailMessageStore para o usuario");
     }
     unlink  $ret{'mailmessagestore'}.'/maildirsize';
+    return 1;
 }
 
 
