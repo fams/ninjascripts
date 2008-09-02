@@ -21,7 +21,7 @@ my $facility = $cfg->val( 'MAIN', 'logfacility' );
 my $ldapuri = $cfg->val( 'MAIN', 'ldapuri' );
 my $ldapuserdn = $cfg->val( 'MAIN' , 'ldapuserdn' );
 my $ldappasswd = $cfg->val( 'MAIN' , 'ldappasswd' );
-my $version = "0.1";
+my $version = "0.2";
 
 $|=1;
 
@@ -51,6 +51,7 @@ my %commands = (
         "removedir"     => \&removedir,
         "version"       => \&version,
         "curdate"       => \&curdate,
+        "removequotafile"       => \&removequotafile,
         "help"          => \&help,
         );
 
@@ -117,6 +118,16 @@ sub mkftpdir {
     }        
     return mksecdir( 'FTP' , $ret{'FTPdir'} , $userid , $chown );
 }
+
+sub removequotafile {
+    my ($userid ) = @_ ;
+    local %ret = getuserattr( $userid , "mailmessagestore" );
+    if ( ! defined $ret{'mailmessagestore'} ){
+       Err("Nao encontrei mailMessageStore para o usuario");
+    }
+    unlink  $ret{'mailmessagestore'}.'/maildirsize';
+}
+
 
 sub mksmbdir {
     my( $userid , $chown ) = @_;
