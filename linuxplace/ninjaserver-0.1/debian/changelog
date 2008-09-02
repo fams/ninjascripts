@@ -1,3 +1,10 @@
+ninjaserver (0.2) unstable; urgency=low
+
+  *  Adicionado removequotafile
+  *  Adicionada versão devido a aumento de comando
+
+ -- Fernando Augusto Medeiros Silva <fams@linuxplace.com.br>  Tue,  2 Sep 2008 16:40:36 -0300
+
 ninjaserver (0.1-14) unstable; urgency=low
 
   * O grupo owner da pasta Maildir agora é definido pelo grupo do usuário e
