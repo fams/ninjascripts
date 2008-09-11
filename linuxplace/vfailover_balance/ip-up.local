@@ -1,0 +1,27 @@
+#!/bin/bash
+. /usr/lib/cfgparser.sh
+init=/etc/vfailover.ini
+cfg.parser $init
+cfg.section.tables
+cfg.section.rota
+
+PPP_IFACE=$1
+PPP_LOCAL=$4
+PPP_REMOTE=$5
+if [ "$PPP_IFACE" == "$PRI_DEV" ]; then
+        /sbin/ip route flush table velox
+        /sbin/ip route add $PPP_LOCAL dev $PPP_IFACE src $PPP_LOCAL table $PRI_TABLE
+        /sbin/ip route add default via $PPP_REMOTE table $PRI_TABLE
+        /sbin/ip rule add from $PPP_LOCAL table $PRI_TABLE
+        /sbin/ip rule add to $PPP_REMOTE table $PRI_TABLE
+        /sbin/ip route flush cache
+fi
+
+if [ "$PPP_IFACE" == "$SEC_DEV" ]; then
+        /sbin/ip route flush table velox
+        /sbin/ip route add $PPP_LOCAL dev $PPP_IFACE src $PPP_LOCAL table $SEC_TABLE
+        /sbin/ip route add default via $PPP_REMOTE table $SEC_TABLE
+        /sbin/ip rule add from $PPP_LOCAL table $SEC_TABLE
+        /sbin/ip rule add to $PPP_REMOTE table $SEC_TABLE
+        /sbin/ip route flush cache
+fi

@@ -1,0 +1,44 @@
+#!/bin/bash
+. /usr/lib/cfgparser.sh
+init=/etc/vfailover.ini
+cfg.parser $init
+cfg.section.tables
+cfg.section.rota
+
+function processa(){
+
+
+if [ "$interface" == "$PRI_DEV" ]; then
+	network=$(ipcalc $new_ip_address/$new_subnet_mask -b |grep Network|awk '{print $2}')
+
+        /sbin/ip route flush table $PRI_TABLE
+
+        /sbin/ip route add $network dev $interface src $new_ip_address table $PRI_TABLE
+        /sbin/ip route add default via $new_routers dev $PRI_DEV table $PRI_TABLE
+        /sbin/ip rule add from $new_ip_address table $PRI_TABLE
+        /sbin/ip rule add to $new_routers table $PRI_TABLE
+        /sbin/ip route flush cache
+	echo PRI_GW=$new_routers > /var/run/vfailover/pri.state
+fi
+
+if [ "$interface" == "$SEC_DEV" ]; then
+        /sbin/ip route flush table $SEC_TABLE
+
+	network=$(ipcalc $new_ip_address/$new_subnet_mask -b |grep Network|awk '{print $2}')
+        /sbin/ip route add $network dev $interface src $new_ip_address table $SEC_TABLE
+        /sbin/ip route add default via $new_routers dev $SEC_DEV table $SEC_TABLE
+        /sbin/ip rule add from $new_ip_address table $SEC_TABLE
+        /sbin/ip rule add to $new_routers table $SEC_TABLE
+	/sbin/ip route del default via $new_routers
+        /sbin/ip route flush cache
+	echo SEC_GW=$new_routers > /var/run/vfailover/sec.state
+fi
+set +x
+}
+case $reason in
+	BOUND|RENEW|REBIND|REBOOT)
+		processa
+		;;
+	EXPIRE|FAIL|RELEASE|STOP)
+		;;
+esac

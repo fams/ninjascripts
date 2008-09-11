@@ -1,0 +1,12 @@
+Source: vfailover
+Section: main
+Priority: extra
+Maintainer: Fernando Augusto <fams@linuxplace.com.br>
+Build-Depends: debhelper (>= 5)
+Standards-Version: 3.7.2
+
+Package: vfailover
+Architecture: all
+Depends: perl, libconfig-inifiles-perl 
+Description: Link redundante e divisor de banda
+    Divide as conexoes entre dois links e faz failover se algum cair

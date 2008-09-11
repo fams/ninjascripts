@@ -1,0 +1,12 @@
+#!/bin/bash
+#
+# carga do vfailover
+
+case $1 in
+ start)
+    /usr/sbin/vfailover start
+    ;;
+  stop)
+    /usr/sbin/vfailover stop
+    ;;
+esac

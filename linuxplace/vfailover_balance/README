@@ -1,0 +1,4 @@
+Nova configuracao do vfailover
+agora temos SOMENTE UM arquivo de configuracao, o vfailover.ini
+se for utilizar ppp, acrescente o ip-up.local  no /etc/ppp
+lembre-se de carregar o vfailover

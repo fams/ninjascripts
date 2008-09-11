@@ -1,0 +1,5 @@
+vfailover (1.0-1) lenny; urgency=low
+
+  * Initial release. (Closes: #12)
+
+ -- Fernando Augusto Medeiros Silva <fams@linuxplace.com.br>  Wed, 23 Apr 2008 14:04:35 -0300
