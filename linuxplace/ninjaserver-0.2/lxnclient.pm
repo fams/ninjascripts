@@ -102,6 +102,7 @@ sub exec{
 # Functions
 #
 # nonblock($socket) puts socket into nonblocking mode
+#
 sub nonblock {
     my $socket = shift;
     my $flags;
