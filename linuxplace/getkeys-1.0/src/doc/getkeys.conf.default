@@ -1,0 +1,11 @@
+#Configuracao do getkeys
+host="http://dotproject.linuxplace.com.br"
+ninja=1
+linuxplace="/usr/local/share/linuxplace"
+user=svccap
+group=users
+homedir=/home/$user
+#caminhos
+GPG=/usr/bin/gpg
+TAR=/bin/tar
+CURL=/usr/bin/curl

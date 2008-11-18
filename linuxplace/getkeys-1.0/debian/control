@@ -1,0 +1,12 @@
+Source: getkeys
+Section: net
+Priority: extra
+Maintainer: Pedro S. Bizzotto <pedro@linuxplace.com.br>
+Build-Depends: debhelper (>= 5)
+Standards-Version: 3.7.2
+
+Package: getkeys
+Architecture: all
+Depends: gnupg,curl,openssh-server,gzip,tar
+Description: Pacote com o atualizador de chaves ssh
+ Atualizador de chaves dsa/rsa, pega automaticamente chaves publicas no servidor da linuxplace.
