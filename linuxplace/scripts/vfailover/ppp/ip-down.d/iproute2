@@ -1,4 +1,0 @@
-if [ "$PPP_IFACE" == "ppp0" ]; then
-        /sbin/ip rule del from $PPP_LOCAL table velox
-fi
-
