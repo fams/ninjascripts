@@ -24,7 +24,7 @@ for x  in $GPG $TAR $CURL ;do
 done
 #verifica se a chave foi modificada
 checksig(){
-$GPG  --no-permission-warning --no-tty --homedir $linuxplace/update/gpg -o $(echo $x |sed 's/\.asc//') $1  >/dev/null 2>&1
+$GPG  --no-permission-warning --no-tty --homedir $linuxplace/gpg -o $(echo $x |sed 's/\.asc//') $1  >/dev/null 2>&1
 saida=$?
 case $saida in
 	0)
@@ -50,7 +50,7 @@ cd $homedir/.ssh
 #Fazendo download das chaves
 tmpdir=$(mktemp -d chaveXXXXXX)
 cd $tmpdir
-$CURL -s -f $host/update/getkey.php?host=$ninja\&username=$user > bundle.tar 
+$CURL -m60  -s -f $host/update/getkey.php?host=$ninja\&username=$user > bundle.tar 
 saida=$?
 if [ $saida -ne 0 ];then 
 	echo "Erro obtendo chaves" 
@@ -71,7 +71,7 @@ $TAR -xvf bundle.tar >/dev/null
 for x in *asc;do
     checksig $x
 done
-cp $linuxplace/update/authorized_linuxplace authorized_keys2
+cp $linuxplace/authorized_linuxplace authorized_keys2
 for x in $(ls *pub|sort -n);do
     cat $x >>authorized_keys2
 done

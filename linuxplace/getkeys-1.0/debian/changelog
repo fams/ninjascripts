@@ -1,3 +1,10 @@
+getkeys (1.0-2) unstable; urgency=low
+
+  * Timeout o dpg
+  * Erro de caminho no script 
+
+ -- Pedro S. Bizzotto <pedro@linuxplace.com.br>  Thu, 25 Nov 2008 14:34:46 -0300
+
 getkeys (1.0-1) unstable; urgency=low
 
   * Initial release 
