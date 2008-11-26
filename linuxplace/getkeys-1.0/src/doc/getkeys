@@ -1,1 +1,0 @@
-23 * * * * root /usr/local/sbin/getkeys.sh /usr/local/etc/getkeys.conf
