@@ -1,7 +1,8 @@
 #!/bin/bash
 
 URL="https://192.168.0.2/update/extended2.php" 
-XMLFILE=$(/bin/mktemp) 
+XMLFILE=$(/bin/mktemp)
+APTFILE=$(/bin/mktemp)
 #Header 
 function XMLheader () {
     echo '<?xml version="1.0" encoding="UTF-8"?>
@@ -38,12 +39,27 @@ function XMLuptime () {
     /usr/bin/uptime
     echo -e "\t</uptime>"
 }
+function XMLpackages () {
+    apt-get -s upgrade > $APTFILE 2>&1
+    echo -e "\t<packages>"
+    UPDATABLES=$(cat $APTFILE |grep upgraded| grep -v following |cut -d' ' -f 1)
+    echo -e "\t\t<updatables num=\"$UPDATABLES\" />"
+    while read PACKLIST; do
+	PACKAGE=$(echo $PACKLIST|grep Inst| sed -e "s/^Inst //")
+	if [ -n "$PACKAGE" ]; then
+	    echo -e "<package val=\"$PACKAGE\" />"
+	fi
+    done < <(cat $APTFILE)
+    echo -e "\t</packages>"
+} 
 ############Print XML##########
-XMLheader >>$XMLFILE
-XMLlast   >>$XMLFILE
-XMLuptime >>$XMLFILE
-XMLfooter >>$XMLFILE
+XMLheader   >>$XMLFILE
+XMLlast     >>$XMLFILE
+XMLuptime   >>$XMLFILE
+XMLpackages >>$XMLFILE
+XMLfooter   >>$XMLFILE
 cat $XMLFILE 
 STR1=$(perl -pe 's/(\W)/"%".unpack"H2",$1/ge' $XMLFILE) 
 curl -k -X POST -F teste=$STR1 $URL 
-rm $XMLFILE 
+rm $XMLFILE
+rm $APTFILE
