@@ -2,6 +2,7 @@
 
 URL="https://192.168.0.2/update/extended2.php" 
 XMLFILE=$(/bin/mktemp) 
+LAST=$(/usr/bin/last -n 1 -R)
 #Header 
 function XMLheader(){
     echo '<?xml version="1.0" encoding="UTF-8"?>
