@@ -50,7 +50,7 @@ function XMLpackages () {
     while read PACKLIST; do
 	PACKAGE=$(echo $PACKLIST|grep Inst| sed -e "s/^Inst //")
 	if [ -n "$PACKAGE" ]; then
-	    echo -e "<package val=\"$PACKAGE\" />"
+	    echo -e "\t\t<package val=\"$PACKAGE\" />"
 	fi
     done < <(cat $APTFILE)
     echo -e "\t</packages>"
