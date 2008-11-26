@@ -3,11 +3,14 @@
 URL="https://192.168.0.2/update/extended2.php" 
 XMLFILE=$(/bin/mktemp)
 APTFILE=$(/bin/mktemp)
+CFGFILE="/usr/local/etc/getkeys.conf"
+NINJA=$(cat $CFGFILE|grep ninja|cut -d'=' -f 2)
 #Header 
 function XMLheader () {
     echo '<?xml version="1.0" encoding="UTF-8"?>
 <gk version="1.1">
 '
+echo -e "\t<ninja number=\"$NINJA\" />"
 }
 function XMLfooter () {
     echo "</gk>"
