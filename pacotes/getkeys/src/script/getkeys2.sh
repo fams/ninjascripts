@@ -2,28 +2,38 @@
 
 URL="https://192.168.0.2/update/extended2.php" 
 XMLFILE=$(/bin/mktemp) 
-LAST=$(/usr/bin/last -n 1 -R)
 #Header 
-function XMLheader(){
+function XMLheader () {
     echo '<?xml version="1.0" encoding="UTF-8"?>
 <gk version="1.1">
 '
 }
-function XMLfooter(){
+function XMLfooter () {
     echo "</gk>"
 }
-function XMLlast(){
+function XMLlast () {
     echo -e "\t<last>"
     while read LAST;do
         LASTUSER=$(echo $LAST|cut -f 1 -d" ") 
         LASTLOGON=$(echo $LAST|cut -f 6 -d" ") 
-        LASTLOGOFF=$(echo $LAST|cut -f 8 -d" ") 
+        LASTSEP=$(echo $LAST|cut -f 7 -d" ")
+	case $LASTSEP in
+		'-') 
+        	LASTLOGOFF=$(echo $LAST|cut -f 8 -d" ")
+		;; 
+		'still')
+		LASTLOGOFF='LOGADO'
+		;;
+		*)
+		LASTLOGOFF='ERRO'
+		;;
+	esac
         echo -e "\t\t<loginentry user=\"$LASTUSER\" logon=\"$LASTLOGON\"
 logoff=\"$LASTLOGOFF\" />"
-    done < <(/usr/bin/last -R|grep -v "^$"|grep -v ^wtmp)
+    done < <(/usr/bin/last -n 5 -R|grep -v "^$"|grep -v ^wtmp)
     echo -e "\t</last>"
 }
-function XMLuptime(){
+function XMLuptime () {
     echo -e "\t<uptime>"
     /usr/bin/uptime
     echo -e "\t</uptime>"
