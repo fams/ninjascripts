@@ -15,7 +15,8 @@ XMLFILE=$(/bin/mktemp)
 APTFILE=$(/bin/mktemp)
 #CFGFILE do getkeys, usado só pra pegar o numero do ninja
 CFGFILE="/usr/local/etc/getkeys.conf"
-NINJA=$(cat $CFGFILE|grep ninja|cut -d'=' -f 2)
+. $CFGFILE
+NINJA=$ninja
 #Header do XML
 function XMLheader () {
     echo '<?xml version="1.0" encoding="UTF-8"?>
