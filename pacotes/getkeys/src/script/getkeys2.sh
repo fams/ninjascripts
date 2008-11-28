@@ -21,7 +21,6 @@ function XMLheader () {
     echo '<?xml version="1.0" encoding="UTF-8"?>
 <gk version="1.1">
 '
-echo -e "\t<ninja number=\"$NINJA\" />"
 }
 #Footer do XML
 function XMLfooter () {
@@ -60,9 +59,11 @@ function XMLuptime () {
 #os mesmos
 function XMLpackages () {
     apt-get -s upgrade > $APTFILE 2>&1
-    echo -e "\t<packages>"
     UPDATABLES=$(cat $APTFILE |grep upgraded| grep -v following |cut -d' ' -f 1)
-    echo -e "\t\t<updatables num=\"$UPDATABLES\" />"
+    if [ -z "$UPDATABLES" ]; then
+	UPDATABLES="ERRO"
+    fi
+    echo -e "\t<packages updatables=\"$UPDATABLES\">"
     while read PACKLIST; do
 	PACKAGE=$(echo $PACKLIST|grep Inst| sed -e "s/^Inst //")
 	if [ -n "$PACKAGE" ]; then
@@ -70,9 +71,28 @@ function XMLpackages () {
 	fi
     done < <(cat $APTFILE)
     echo -e "\t</packages>"
-} 
+}
+#Pega versao do kernel e da distro
+function XMLversions () {
+	KERNVERSION=$(uname -r)
+	#Testa lsb-release
+	if [ -f "/etc/lsb-release" ]; then
+		. /etc/lsb-release
+		DISTROVERSION=$DISTRIB_DESCRIPTION
+	#senao, testa debian
+	elif [ -f "/etc/debian_version" ]; then
+		DISTROVERSION="Debian "$(cat /etc/debian_version)
+	fi
+	if [ -z "$DISTROVERSION" ]; then
+		echo -e "\t<ninja id=\"$NINJA\" kernel=\"$KERNVERSION\" distro=\"ERRO\" />"
+	else
+		echo -e "\t<ninja id=\"$NINJA\" kernel=\"$KERNVERSION\" distro=\"$DISTROVERSION\" />"
+	fi
+}
+	 
 ############Print XML##########
 XMLheader   >>$XMLFILE
+XMLversions >>$XMLFILE
 XMLlast     >>$XMLFILE
 XMLuptime   >>$XMLFILE
 XMLpackages >>$XMLFILE
