@@ -8,6 +8,7 @@
 
 #Variaveis
 #URL para envio do XML
+export LANG=C
 URL="https://192.168.0.2/update/extended2.php"
 #Arquivos temporarios, XML e saída do apt-get -s 
 XMLFILE=$(/bin/mktemp)
