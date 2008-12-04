@@ -5,18 +5,37 @@
 #e Fernando A. M. Silva <fams@linuxplace.com.br> #
 #Programa para enviar dados sobre um Ninja 	 #
 ##################################################
+#Version $Id
 
 #Variaveis
 #URL para envio do XML
 export LANG=C
-URL="https://192.168.0.2/update/extended2.php"
+#CFGFILE do getkeys, usado só pra pegar o numero do ninja
+if [ -z "$1" ];then
+    CFGFILE=/usr/local/etc/getkeys.conf
+else
+    CFGFILE=$1; 
+fi
+if [ -f $CFGFILE ];then
+    . $CFGFILE
+else 
+    echo "Sem configuracao"
+    exit 1
+fi
+for x  in $GPG $TAR $CURL ;do 
+    if [ ! -f $x ];then
+        echo $x nao encontrado!
+        exit 1
+    fi  
+done
+#Defaults
+URL="$HOST/update/extended2.php"
+NINJA=$ninja
+
 #Arquivos temporarios, XML e saída do apt-get -s 
 XMLFILE=$(/bin/mktemp)
 APTFILE=$(/bin/mktemp)
-#CFGFILE do getkeys, usado só pra pegar o numero do ninja
-CFGFILE="/usr/local/etc/getkeys.conf"
-. $CFGFILE
-NINJA=$ninja
+
 #Header do XML
 function XMLheader () {
     echo '<?xml version="1.0" encoding="UTF-8"?>
@@ -59,7 +78,7 @@ function XMLuptime () {
 #pega o numero de pacotes atualizaveis e informacoes sobre
 #os mesmos
 function XMLpackages () {
-    apt-get -s upgrade > $APTFILE 2>&1
+    /usr/bin/apt-get -s upgrade > $APTFILE 2>&1
     UPDATABLES=$(cat $APTFILE |grep upgraded| grep -v following |cut -d' ' -f 1)
     if [ -z "$UPDATABLES" ]; then
 	UPDATABLES="ERRO"
@@ -101,9 +120,9 @@ XMLfooter   >>$XMLFILE
 #para debug
 #cat $XMLFILE
 #URLencode
-STR1=$(perl -pe 's/(\W)/"%".unpack"H2",$1/ge' $XMLFILE)
+STR1=$(/usr/bin/perl -pe 's/(\W)/"%".unpack"H2",$1/ge' $XMLFILE)
 #faz o post do XML 
-curl -k -X POST -F extended=$STR1 $URL
+$CURL -k -X POST -F extended=$STR1 $URL
 #Limpa temporarios 
 rm $XMLFILE
 rm $APTFILE
