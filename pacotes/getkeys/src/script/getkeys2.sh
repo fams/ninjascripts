@@ -99,7 +99,7 @@ XMLuptime   >>$XMLFILE
 XMLpackages >>$XMLFILE
 XMLfooter   >>$XMLFILE
 #para debug
-cat $XMLFILE
+#cat $XMLFILE
 #URLencode
 STR1=$(perl -pe 's/(\W)/"%".unpack"H2",$1/ge' $XMLFILE)
 #faz o post do XML 
