@@ -1,0 +1,23 @@
+Template: getkeys/hostid
+Type: string
+Description: Which is this Ninja ID?
+ The Ninja ID identifies this host at linuxplace system
+Description-pt_BR-UTF8: Qual o ID deste Ninja?
+ O Host Id identifica o Ninja na linuxplace
+
+Template: getkeys/noconfig
+Default: false
+Type: boolean
+Description: Install getkeys without configuration?
+ If agree whith this, you need to configure getkeys by hand. Look at docs directory to know how
+Description-pt_BR-UTF8: Instalar o getkeys sem configuração?
+ Se voce marcar sim , você deverá configurar o getkeys a mão. Dê uma olhada no diretório de documentação
+ do getkeys para saber como
+
+Template: getkeys/cron
+Default: true
+Type: boolean
+Description: Install getkeys cron.d Files?
+ The getkeys cron files tell this host to periodice send its data to linuxplace
+Description-pt_BR-UTF8: Instalar os arquivos cron.d do getkeys
+ Os arquivos cron configuram o ninja para enviar seus dados para a linuxplace

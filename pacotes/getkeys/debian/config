@@ -1,0 +1,24 @@
+#!/bin/bash
+
+set -e
+
+# Load debconf
+. /usr/share/debconf/confmodule
+#
+function configgk(){
+    db_input high getkeys/hostid || true
+    db_go
+    db_input high getkeys/cron || true
+    db_go
+}
+
+
+db_input medium getkeys/noconfig || true
+db_go
+
+# Check their answer.
+db_get getkeys/noconfig
+if [ "$RET" = "false" ]; then
+    configgk
+    # Poor misguided one..
+fi

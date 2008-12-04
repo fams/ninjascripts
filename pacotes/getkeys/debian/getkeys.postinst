@@ -1,0 +1,62 @@
+#!/bin/bash
+set -e
+
+case "$1" in
+        configure)
+                # continue below
+        ;;
+
+        abort-upgrade|abort-remove|abort-deconfigure)
+                exit 0
+        ;;
+
+        *)
+                echo "postinst called with unknown argument \`$1'" >&2
+                exit 0
+        ;;
+esac
+
+if [ ! -f /etc/default/getkeys ]; then
+    cat >/etc/default/getkeys <<EOF123
+GK_URL="https://dotproject.linuxplace.com.br"
+GK_CONF="/usr/local/etc/getkeys.conf"
+GK_LOGIN=svccap
+EOF123
+fi
+
+# Handle debconf
+. /usr/share/debconf/confmodule
+. /etc/default/getkeys
+
+configgk(){
+    db_get getkeys/hostid
+    hostid=$RET
+    cat  > $GK_CONF <<EOF
+host="$GK_URL"
+ninja=$hostid
+linuxplace="/usr/local/share/linuxplace"
+user=$GK_LOGIN
+group=users
+homedir=/home/\$user
+#caminhos
+GPG=/usr/bin/gpg
+TAR=/bin/tar
+CURL=/usr/bin/curl
+EOF
+    db_get getkeys/cron || true
+    if [ "$RET" == 'true' ] ; then
+    	interval=`echo $hostid%60|bc`
+        cat >/etc/cron.d/getkeys    <<EOF
+$interval * * * * /usr/local/sbin/getkeys.sh $GK_CONF
+EOF
+        cat >/etc/cron.d/extended    <<EOF
+$interval 0 * * * /usr/local/sbin/extended.sh $GK_CONF
+EOF
+    fi
+}
+
+db_get getkeys/noconfig || true
+
+if [ "$RET" == 'false' ] ; then
+	configgk
+fi
