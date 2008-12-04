@@ -29,7 +29,7 @@ for x  in $GPG $TAR $CURL ;do
     fi  
 done
 #Defaults
-URL="$HOST/update/extended2.php"
+URL="$host/update/extended2.php"
 NINJA=$ninja
 
 #Arquivos temporarios, XML e saída do apt-get -s 
