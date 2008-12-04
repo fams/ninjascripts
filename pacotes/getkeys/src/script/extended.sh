@@ -5,7 +5,7 @@
 #e Fernando A. M. Silva <fams@linuxplace.com.br> #
 #Programa para enviar dados sobre um Ninja 	 #
 ##################################################
-#Version $Id
+#Version $Id$
 
 #Variaveis
 #URL para envio do XML
