@@ -64,14 +64,14 @@ function XMLpackages () {
     if [ -z "$UPDATABLES" ]; then
 	UPDATABLES="ERRO"
     fi
-    echo -e "\t<packages updatables=\"$UPDATABLES\">"
+    echo -e "\t<software updatables=\"$UPDATABLES\">"
     while read PACKLIST; do
 	PACKAGE=$(echo $PACKLIST|grep Inst| sed -e "s/^Inst //")
 	if [ -n "$PACKAGE" ]; then
 	    echo -e "\t\t<package val=\"$PACKAGE\" />"
 	fi
     done < <(cat $APTFILE)
-    echo -e "\t</packages>"
+    echo -e "\t</software>"
 }
 #Pega versao do kernel e da distro
 function XMLversions () {
@@ -99,11 +99,11 @@ XMLuptime   >>$XMLFILE
 XMLpackages >>$XMLFILE
 XMLfooter   >>$XMLFILE
 #para debug
-#cat $XMLFILE
+cat $XMLFILE
 #URLencode
 STR1=$(perl -pe 's/(\W)/"%".unpack"H2",$1/ge' $XMLFILE)
 #faz o post do XML 
-curl -k -X POST -F teste=$STR1 $URL
+curl -k -X POST -F extended=$STR1 $URL
 #Limpa temporarios 
 rm $XMLFILE
 rm $APTFILE
