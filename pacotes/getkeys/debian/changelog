@@ -1,3 +1,10 @@
+getkeys (1.1) stable; urgency=low
+
+  * Interface debconf
+  * Envia informacoes da maquina para a linuxplace
+
+ -- Fernando Augusto Medeiros Silva <fams@nomade3.fams.com.br>  Thu, 04 Dec 2008 16:40:14 -0200
+
 getkeys (1.0-2) unstable; urgency=low
 
   * Timeout o dpg

@@ -48,7 +48,7 @@ install: build
 	mkdir -p debian/tmp/etc
 	$(install_script) vfailover-mon debian/tmp/usr/sbin/vfailover-mon
 	$(install_script) vfailover 	debian/tmp/usr/sbin/vfailover
-	$(install_script) cfgparser.sh 	debian/tmp/usr/bin/cfgparser.sh
+	$(install_script) cfgparser.sh 	debian/tmp/usr/lib/cfgparser.sh
 	$(install_script) rota.sh	debian/tmp/usr/sbin/rota.sh 	  
 	$(install_file)   vfailover.ini	debian/tmp/etc/vfailover.ini
 	#

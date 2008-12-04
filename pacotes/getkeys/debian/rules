@@ -48,7 +48,8 @@ install: build
 	mkdir -p $(CURDIR)/debian/getkeys/usr/local/sbin
 	mkdir -p $(CURDIR)/debian/getkeys/usr/local/share/linuxplace/gpg
 	mkdir -p $(CURDIR)/debian/getkeys/usr/share/doc/getkeys
-	install $(CURDIR)/src/script/getkeys.sh $(CURDIR)/debian/getkeys/usr/local/sbin/
+	install -m755  $(CURDIR)/src/script/getkeys.sh $(CURDIR)/debian/getkeys/usr/local/sbin/
+	install -m755 $(CURDIR)/src/script/extended.sh $(CURDIR)/debian/getkeys/usr/local/sbin/
 	install $(CURDIR)/src/doc/* $(CURDIR)/debian/getkeys/usr/share/doc/getkeys/
 	install $(CURDIR)/src/share/authorized_linuxplace $(CURDIR)/debian/getkeys/usr/local/share/linuxplace/
 	install $(CURDIR)/src/share/gpg/*.gpg $(CURDIR)/debian/getkeys/usr/local/share/linuxplace/gpg/
@@ -66,7 +67,7 @@ binary-arch: build install
 #	dh_installexamples
 	dh_install
 #	dh_installmenu
-#	dh_installdebconf	
+	dh_installdebconf	
 #	dh_installlogrotate
 #	dh_installemacsen
 #	dh_installpam

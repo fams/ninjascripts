@@ -7,6 +7,7 @@ Standards-Version: 3.7.2
 
 Package: getkeys
 Architecture: all
-Depends: gnupg,curl,openssh-server,gzip,tar
+Pre-Depends: debconf (>= 0.2.17), bc
+Depends: gnupg,curl,openssh-server,gzip,tar,perl
 Description: Pacote com o atualizador de chaves ssh
  Atualizador de chaves dsa/rsa, pega automaticamente chaves publicas no servidor da linuxplace.
