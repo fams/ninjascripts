@@ -1,3 +1,9 @@
+ninjaserver (0.2-1) intrepid; urgency=low
+
+  * removequotafile Com problemas
+
+ -- Fernando Augusto Medeiros Silva <fams@nomade3.fams.com.br>  Wed, 07 Jan 2009 11:56:33 -0200
+
 ninjaserver (0.2) unstable; urgency=low
 
   *  Adicionado removequotafile
