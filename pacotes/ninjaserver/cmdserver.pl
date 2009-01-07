@@ -121,11 +121,11 @@ sub mkftpdir {
 
 sub removequotafile {
     my ($userid ) = @_ ;
-    local %ret = getuserattr( $userid , "mailmessagestore" );
-    if ( ! defined $ret{'mailmessagestore'} ){
+    local %ret = getuserattr( $userid , "mailMessageStore" );
+    if ( ! defined $ret{'mailMessageStore'} ){
        Err("Nao encontrei mailMessageStore para o usuario");
     }
-    unlink  $ret{'mailmessagestore'}.'/maildirsize';
+    unlink  $ret{'mailMessageStore'}.'/maildirsize';
     Info(q|Removido arquivo de Quota $userid|);
     return 1;
 }
