@@ -1,5 +1,4 @@
 #!/bin/bash
-#set -x
 
 cfg.parser () {
     IFS=$'\n' && ini=( $(<$1) )              # convert to line-array

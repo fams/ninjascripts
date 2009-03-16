@@ -12,7 +12,7 @@ cfg.section.tables
 
 if [ "$1" == "start" ];then
 	if [ ! -z "$PRI_NET" ];then
-		/sbin/ip route add $PRI_NET dev eth1 table $PRI_TABLE
+		/sbin/ip route add $PRI_NET dev $PRI_DEV table $PRI_TABLE
 	fi
 	if [ ! -z "$PRI_GW" ];then
 		/sbin/ip route add default via $PRI_GW table $PRI_TABLE
@@ -24,7 +24,7 @@ if [ "$1" == "start" ];then
 		/sbin/ip rule add to $PRI_MON table $PRI_TABLE
 	fi
 	if [ ! -z "$SEC_NET" ];then
-		/sbin/ip route add $SEC_NET dev eth1 table $SEC_TABLE
+		/sbin/ip route add $SEC_NET dev $SEC_DEV table $SEC_TABLE
 	fi
 	if [ ! -z "$SEC_GW" ];then
 		/sbin/ip route add default via $SEC_GW table $SEC_TABLE
@@ -53,7 +53,7 @@ if [ "$1" == "start" ];then
 fi
 if [ "$1" == "stop" ];then
 	if [ ! -z "$PRI_NET" ];then
-		/sbin/ip route del $PRI_NET dev eth1 table $PRI_TABLE
+		/sbin/ip route del $PRI_NET dev $PRI_DEV table $PRI_TABLE
 	fi
 	if [ ! -z "$PRI_GW" ];then
 		/sbin/ip route del default via $PRI_GW table $PRI_TABLE
@@ -65,7 +65,7 @@ if [ "$1" == "stop" ];then
 		/sbin/ip rule del to $PRI_MON table $PRI_TABLE
 	fi
 	if [ ! -z "$SEC_NET" ];then
-		/sbin/ip route del $SEC_NET dev eth1 table $SEC_TABLE
+		/sbin/ip route del $SEC_NET dev $SEC_DEV table $SEC_TABLE
 	fi
 	if [ ! -z "$SEC_GW" ];then
 		/sbin/ip route del default via $SEC_GW table $SEC_TABLE

@@ -77,8 +77,15 @@ init=/etc/vfailover.ini
 cfg.parser $init
 cfg.section.tables
 cfg.section.rota
-. /var/run/vfailover/pri.state
-. /var/run/vfailover/sec.state
+#Sobrescreve os parametros do ini com os valores recebidos via dhcp se houver
+if [ -f /var/run/vfailover/pri.state ];then
+    . /var/run/vfailover/pri.state
+fi
+if [ -f /var/run/vfailover/sec.state ];then
+    . /var/run/vfailover/sec.state
+fi
+    
+
 		    
 action=$1
 

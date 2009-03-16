@@ -1,0 +1,13 @@
+#!/bin/bash
+echo fams >/tmp/outd
+PPP_IFACE="$1"
+PPP_TTY="$2"
+PPP_SPEED="$3"
+PPP_LOCAL="$4"
+PPP_REMOTE="$5"
+PPP_IPPARAM="$6"
+export PPP_IFACE PPP_TTY PPP_SPEED PPP_LOCAL PPP_REMOTE PPP_IPPARAM
+if [ "$PPP_IFACE" == "ppp1" ] ; then
+        ip route add default via $PPP_REMOTE dev ppp1  table pr1000
+fi
+

@@ -1,2 +1,6 @@
-vfailover suportar mais de 2 links
-suporte a redundância real
+Coisas que queremos implementar
+
+
+- Vfailover suportar mais de 2 links
+- suporte a balanceamento real
+- Integração com shorewall

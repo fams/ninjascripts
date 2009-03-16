@@ -1,27 +1,56 @@
 #!/bin/bash
+PPP_IFACE=echo $1 |awk '{print $1}'
+PPP_LOCAL=echo $1 |awk '{print $4}'
+PPP_REMOTE=echo $1 |awk '{print $5}'
 . /usr/lib/cfgparser.sh
 init=/etc/vfailover.ini
 cfg.parser $init
 cfg.section.tables
 cfg.section.rota
 
-PPP_IFACE=$1
-PPP_LOCAL=$4
-PPP_REMOTE=$5
 if [ "$PPP_IFACE" == "$PRI_DEV" ]; then
+	echo balh >>/tmp/saida2
         /sbin/ip route flush table velox
         /sbin/ip route add $PPP_LOCAL dev $PPP_IFACE src $PPP_LOCAL table $PRI_TABLE
-        /sbin/ip route add default via $PPP_REMOTE table $PRI_TABLE
+        /sbin/ip route add default via $PPP_REMOTE dev $PPP_IFACE table $PRI_TABLE
         /sbin/ip rule add from $PPP_LOCAL table $PRI_TABLE
         /sbin/ip rule add to $PPP_REMOTE table $PRI_TABLE
         /sbin/ip route flush cache
+	$IFS_OLD=$IFS
+    	IFS="$IFS "
+    	ip route show table main |
+    	while read net route; do
+        	case $net in
+            	default|nexthop)
+                	;;
+            	*)
+                	ip route add $net $route table $PRI_TABLE
+                	;;
+        	esac
+    	done
+	IFS=$IFS_OLD
+	echo PRI_GW=$PPP_REMOTE > /var/run/vfailover/pri.state
 fi
 
 if [ "$PPP_IFACE" == "$SEC_DEV" ]; then
         /sbin/ip route flush table velox
         /sbin/ip route add $PPP_LOCAL dev $PPP_IFACE src $PPP_LOCAL table $SEC_TABLE
-        /sbin/ip route add default via $PPP_REMOTE table $SEC_TABLE
+        /sbin/ip route add default via $PPP_REMOTE dev $PPP_IFACE table $SEC_TABLE
         /sbin/ip rule add from $PPP_LOCAL table $SEC_TABLE
         /sbin/ip rule add to $PPP_REMOTE table $SEC_TABLE
         /sbin/ip route flush cache
+	$IFS_OLD=$IFS
+    	IFS="$IFS "
+    	ip route show table main |
+    	while read net route; do
+        	case $net in
+            	default|nexthop)
+                	;;
+            	*)
+                	ip route add $net $route table $SEC_TABLE
+                	;;
+        	esac
+    	done
+	IFS=$IFS_OLD
+	echo SEC_GW=$PPP_REMOTE > /var/run/vfailover/sec.state
 fi
