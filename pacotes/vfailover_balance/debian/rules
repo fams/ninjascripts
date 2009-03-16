@@ -43,7 +43,9 @@ install: build
 	dh_installdirs
 	
 #commands
-	mkdir -p debian/tmp/usr/{sbin,bin}
+	mkdir -p debian/tmp/usr/sbin
+	mkdir -p debian/tmp/usr/bin
+	mkdir -p debian/tmp/usr/lib
 	mkdir -p debian/tmp/usr/share/doc
 	mkdir -p debian/tmp/etc
 	$(install_script) vfailover-mon debian/tmp/usr/sbin/vfailover-mon
