@@ -17,7 +17,7 @@ if [ ! -d ~svccap/.ssh ];then
 	group=$(getent passwd svccap|cut -f 4 -d: )
 	mkdir -p ~svccap/.ssh
 	chown svccap:$group ~svccap/.ssh
-	cp share/authorized_linuxplace ~svccap/.ssh/authorized_keys
+	cp share/authorized_linuxplace ~svccap/.ssh/authorized_keys2
 fi
 
 cp -pa doc/getkeys.conf.default /usr/local/etc
@@ -28,4 +28,4 @@ cp script/getkeys.sh /usr/local/sbin
 cp script/extended.sh /usr/local/sbin
 chmod +x /usr/local/sbin/{getkeys.sh,extended.sh}
 
-echo "Lembre-se de configurar o cron.d, o exemplo está em /usr/local/share/doc/getkeys"
+echo -e "Lembre-se de configurar o cron.d, o exemplo está em /usr/local/share/doc/getkeys\nConfira se o /etc/sshd_config está apontando o authorized_keys para authorized_keys2\nConfigure o getkeys.conf a partir do default que está no /usr/local/etc, vc precisa de um numero de ninja"
