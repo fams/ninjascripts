@@ -1,0 +1,30 @@
+#!/bin/bash
+getent passwd svccap >/dev/null
+ret=$?
+if [ $ret -ne 0 ];then
+	echo "Nao existe usuario svccap"
+fi
+if [ ! -d /usr/local/share/linuxplace ]; then
+	mkdir -p /usr/local/share/linuxplace
+fi
+if [ ! -d /usr/local/etc ]; then
+	mkdir -p /usr/local/etc
+fi
+if [ ! -d /usr/local/share/doc/getkeys ]; then
+	mkdir -p /usr/local/share/doc/getkeys
+fi
+if [ ! -d ~svccap/.ssh ];then
+	group=$(getent passwd svccap|cut -f 4 -d: )
+	mkdir -p ~svccap/.ssh
+	chown svccap:$group ~svccap/.ssh
+fi
+
+cp -pa doc/getkeys.conf.default /usr/local/etc
+cp -pa share/* /usr/local/share/linuxplace
+cp -pa doc/* /usr/local/share/doc/getkeys/
+
+cp script/getkeys.sh /usr/local/sbin
+cp script/extended.sh /usr/local/sbin
+chmod +x /usr/local/sbin/{getkeys.sh,extended.sh}
+
+echo "Lembre-se de configurar o cron.d, o exemplo está em /usr/local/share/doc/getkeys"
