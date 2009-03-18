@@ -17,6 +17,7 @@ if [ ! -d ~svccap/.ssh ];then
 	group=$(getent passwd svccap|cut -f 4 -d: )
 	mkdir -p ~svccap/.ssh
 	chown svccap:$group ~svccap/.ssh
+	cp share/authorized_linuxplace ~svccap/.ssh/authorized_keys
 fi
 
 cp -pa doc/getkeys.conf.default /usr/local/etc
