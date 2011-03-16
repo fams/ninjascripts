@@ -1,3 +1,3 @@
-LDAPPROXYPASS="ghz324L"
-DOMAIN="bartofil"
+LDAPPROXYPASS="algumasenha"
+DOMAIN="mydomain"
 SUFFIX="dc=$DOMAIN,dc=intra"
