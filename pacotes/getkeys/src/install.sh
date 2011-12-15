@@ -1,4 +1,6 @@
 #!/bin/bash
+
+#Install getkeys
 getent passwd svccap >/dev/null
 ret=$?
 if [ $ret -ne 0 ];then
