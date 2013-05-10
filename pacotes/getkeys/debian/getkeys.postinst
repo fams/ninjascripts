@@ -47,10 +47,10 @@ EOF
     if [ "$RET" == 'true' ] ; then
     	interval=`echo $hostid%60|bc`
         cat >/etc/cron.d/getkeys    <<EOF
-$interval * * * * /usr/local/sbin/getkeys.sh $GK_CONF
+$interval * * * * root /usr/local/sbin/getkeys.sh $GK_CONF
 EOF
         cat >/etc/cron.d/extended    <<EOF
-$interval 0 * * * /usr/local/sbin/extended.sh $GK_CONF
+$interval 0 * * * root /usr/local/sbin/extended.sh $GK_CONF
 EOF
     fi
 }

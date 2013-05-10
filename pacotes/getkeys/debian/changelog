@@ -1,3 +1,9 @@
+getkeys (1.2) stable; urgency=low
+
+  * Atualizado com nova chave linuxplace 
+
+ -- Fernando Augusto Medeiros Silva <fams@nomade3.fams.com.br>  Mon, 28 Mar 2011 12:15:10 -0300
+
 getkeys (1.1) stable; urgency=low
 
   * Interface debconf
