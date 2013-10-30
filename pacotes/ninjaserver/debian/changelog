@@ -1,3 +1,10 @@
+ninjaserver (0.3) intrepid; urgency=low
+
+  * Adicionado Wrapper para perl 
+  * 
+
+ -- Fernando Augusto Medeiros Silva <fams@linuxplace.com.br>  Wed, 30 Oct 2013 17:11:02 -0200
+
 ninjaserver (0.2-1) intrepid; urgency=low
 
   * removequotafile Com problemas
