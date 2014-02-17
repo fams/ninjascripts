@@ -1,8 +1,0 @@
-rrdtool=/usr/bin/rrdtool
-max_time=10
-graph_sizey=300
-alarm_time=10
-debug_mode=
-graph_sizex=600
-max_mod_time=20
-max_log_size=10000000

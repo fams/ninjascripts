@@ -1,1 +1,0 @@
-23 * * * * root /usr/local/linuxplace/update/getkeys.sh /usr/local/etc/getkeys.conf

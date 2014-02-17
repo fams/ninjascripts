@@ -1,9 +1,0 @@
-#!/bin/sh
-echo -e "Incio em " $(date +"%H:%M:%S - %d/%m/%Y" ) >>/var/log/backup.log
-mt rewind
-star -cv -V pattern=/proc/\* pattern=/sys/\* pattern=/dev/shm/\* pattern=/tmp/catalog pattern=/home/backup/\* -Hexustar -acl -block-number  -f=/dev/nst0 / >/tmp/catalog 2>/tmp/erros
-star -cv -Hexustar -acl -block-number -f=/dev/nst0 /tmp/catalog
-cp  /tmp/catalog /var/log/backup/$(date +"%y-%m-%d").catalog
-cat /tmp/erros >>/var/log/backup_erros.log
-echo -e "Finalizdo  em " $(date +"%H:%M:%S - %d/%m/%Y" ) >>/var/log/backup.log
-mt eject

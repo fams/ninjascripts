@@ -1,3 +1,0 @@
-LDAPPROXYPASS="algumasenha"
-DOMAIN="mydomain"
-SUFFIX="dc=$DOMAIN,dc=intra"
